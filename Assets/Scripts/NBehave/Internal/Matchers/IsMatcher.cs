@@ -10,12 +10,12 @@
             return this.obj.Equals(obj);
         }
 
-		public bool Equals(Matcher other) {
-			return this.obj.Equals(((IsMatcher)other).obj);
-		}
+        public bool Equals(Matcher other) {
+            return this.obj.Equals(((IsMatcher)other).obj);
+        }
 
-		override public int GetHashCode() {
-			return obj.GetHashCode();
-		}
+        override public int GetHashCode() {
+            return obj.GetHashCode();
+        }
     }
 }

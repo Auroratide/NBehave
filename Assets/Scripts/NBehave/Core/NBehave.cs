@@ -10,13 +10,13 @@
             stubs = new MethodStubs();
         }
 
-		public CallMemory CallMemory {
-			get { return callMemory; }
-		}
+        public CallMemory CallMemory {
+            get { return callMemory; }
+        }
 
-		public MethodStubs MethodStubs {
-			get { return stubs; }
-		}
+        public MethodStubs MethodStubs {
+            get { return stubs; }
+        }
 
         public MethodCall Call(params object[] arguments) {
             string method = new System.Diagnostics.StackFrame(1).GetMethod().Name;

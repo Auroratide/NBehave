@@ -11,15 +11,15 @@ namespace Auroratide.NBehave.Internal {
             methods = new Dictionary<string, List<object[]>>();
         }
 
-		public int TimesCalled(string method, MatcherList arguments) {
-			if(!methods.ContainsKey(method))
-				return 0;
+        public int TimesCalled(string method, MatcherList arguments) {
+            if(!methods.ContainsKey(method))
+                return 0;
 
-			if(arguments == null)
-				return methods[method].Count;
+            if(arguments == null)
+                return methods[method].Count;
 
-			return methods[method].Count(args => arguments.MatchesAll(args));
-		}
+            return methods[method].Count(args => arguments.MatchesAll(args));
+        }
 
         public void Call(string method, object[] arguments) {
             if(!methods.ContainsKey(method))

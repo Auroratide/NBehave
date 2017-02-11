@@ -7,7 +7,7 @@ using System.Text.RegularExpressions;
 
 namespace Auroratide.NBehave.Integration {
 
-	public class MatcherIntegrationTest {
+    public class MatcherIntegrationTest {
         private const int DEFAULT_INT = 0;
         
         Mock mock;
@@ -218,6 +218,6 @@ namespace Auroratide.NBehave.Integration {
 
         private class Base {}
         private class Derived : Base {}
-	}
+    }
 
 }

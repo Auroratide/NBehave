@@ -1,17 +1,17 @@
 ﻿namespace Auroratide.NBehave.Internal {
-	public class AtMost : Times {
-		private int expected;
+    public class AtMost : Times {
+        private int expected;
 
-		public AtMost(int expected) {
-			this.expected = expected;
-		}
+        public AtMost(int expected) {
+            this.expected = expected;
+        }
 
-		override public string ToString() {
-			return "at most " + expected.ToString();
-		}
+        override public string ToString() {
+            return "at most " + expected.ToString();
+        }
 
-		public bool Matches(int times) {
-			return times <= expected;
-		}
-	}
+        public bool Matches(int times) {
+            return times <= expected;
+        }
+    }
 }
