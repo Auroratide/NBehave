@@ -18,7 +18,6 @@ namespace Auroratide.NBehave.Integration {
             Verify.That(() => mock.NoParameters()).IsCalled();
         }
 
-        //[Ignore("Not working for some reason.")]
         [Test] public void ShouldMockMethodsWithPrimitiveParameters() {
             mock.PrimitiveParameters(7, true, 9.5f);
 
@@ -32,8 +31,7 @@ namespace Auroratide.NBehave.Integration {
 
             Verify.That(() => mock.ObjectParameters("Hello!", o, c)).IsCalled();
         }
-
-        [Ignore("Crashes")]
+            
         [Test] public void ShouldMockMethodsWithStructParameters() {
             Struct s = new Struct(2, 3);
             mock.StructParameters(s);
