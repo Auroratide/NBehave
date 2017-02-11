@@ -3,6 +3,8 @@ using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
 
+using UnityEngine;
+
 namespace Auroratide.NBehave.Internal {
     public class MockMethodImplementor {
         private TypeBuilder typeBuilder;
@@ -14,10 +16,38 @@ namespace Auroratide.NBehave.Internal {
         }
 
         public MethodInfo Implement(MethodInfo method) {
+            /*
+            MethodBuilder methodBuilder = typeBuilder.DefineMethod(method.Name, MethodAttributes.Public | MethodAttributes.Virtual, CallingConventions.Standard);
+            string[] genericTypeNames = method.GetGenericArguments().Select((Type type) => type.Name).ToArray();
+
+            Type returnType = method.ReturnType;
+            Type[] paramTypes = method.GetParameters().Select((ParameterInfo param) => param.ParameterType).ToArray();
+            if(genericTypeNames.Length > 0) {
+                GenericTypeParameterBuilder[] genericTypes = methodBuilder.DefineGenericParameters(genericTypeNames);
+                if(method.ReturnType.IsGenericParameter) {
+                    Debug.Log(genericTypes[0].Name);
+                    returnType = genericTypes.First((GenericTypeParameterBuilder type) => type.Name == returnType.Name);
+                }
+                for(int i = 0; i < paramTypes.Length; ++i) {
+                    if(paramTypes[i].IsGenericParameter) {
+                        paramTypes[i] = genericTypes.First((GenericTypeParameterBuilder type) => type.Name == paramTypes[i].Name);
+                    }
+                }
+            }
+
+            methodBuilder.SetReturnType(returnType);
+            methodBuilder.SetParameters(paramTypes);
+            */
+
+
+
             Type[] paramTypes = method.GetParameters().Select((ParameterInfo param) => param.ParameterType).ToArray();
             MethodBuilder methodBuilder = typeBuilder.DefineMethod(method.Name, MethodAttributes.Public | MethodAttributes.Virtual, CallingConventions.Standard, method.ReturnType, paramTypes);
+            string[] genericTypeNames = method.GetGenericArguments().Select((Type type) => type.Name).ToArray();
+            if(genericTypeNames.Length > 0)
+                methodBuilder.DefineGenericParameters(genericTypeNames);
 
-            new Emit(methodBuilder.GetILGenerator(), method.ReturnType, paramTypes)
+            new Emit(methodBuilder.GetILGenerator(), methodBuilder.ReturnType, paramTypes)
                 .CreateParamsArray()
                 .PopulateParamsArrayWithMethodCallValues()
                 .CallNBehaveWithParamValues(nbehave)        //  nbehave.Call(params)
