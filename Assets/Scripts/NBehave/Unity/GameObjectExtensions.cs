@@ -18,6 +18,11 @@ namespace Auroratide.NBehave.Unity {
             }
         }
 
+        public static T AddMockComponent<T>(this GameObject obj) where T : class {
+        //  TODO Stack overflow: c-sharp-use-system-type-as-generic-parameter
+            return null;
+        }
+
     }
 
 }
