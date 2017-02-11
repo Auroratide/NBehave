@@ -18,11 +18,11 @@ namespace Auroratide.NBehave.Integration {
             Verify.That(() => mock.NoParameters()).IsCalled();
         }
 
-        [Ignore("Not working for some reason.")]
+        //[Ignore("Not working for some reason.")]
         [Test] public void ShouldMockMethodsWithPrimitiveParameters() {
-            mock.PrimativeParameters(7, true, 9.5f);
+            mock.PrimitiveParameters(7, true, 9.5f);
 
-            Verify.That(() => mock.PrimativeParameters(7, true, 9.5f)).IsCalled();
+            Verify.That(() => mock.PrimitiveParameters(7, true, 9.5f)).IsCalled();
         }
 
         [Test] public void ShouldMockMethodsWithObjectParameters() {
@@ -48,8 +48,8 @@ namespace Auroratide.NBehave.Integration {
         }
 
         [Test] public void ShouldMockMethodsWithPrimitiveReturn() {
-            When.Called(() => mock.PrimativeReturn()).Then.Return(7);
-            int answer = mock.PrimativeReturn();
+            When.Called(() => mock.PrimitiveReturn()).Then.Return(7);
+            int answer = mock.PrimitiveReturn();
 
             Assert.That(answer, Is.EqualTo(7));
         }
@@ -95,12 +95,12 @@ namespace Auroratide.NBehave.Integration {
 
         private interface Interface {
             void NoParameters();
-            void PrimativeParameters(int n, bool b, float f);
+            void PrimitiveParameters(int n, bool b, float f);
             void ObjectParameters(string s, object o, Class c);
             void StructParameters(Struct s);
 
             void NoReturn();
-            int PrimativeReturn();
+            int PrimitiveReturn();
             string ObjectReturn();
             Struct StructReturn();
 

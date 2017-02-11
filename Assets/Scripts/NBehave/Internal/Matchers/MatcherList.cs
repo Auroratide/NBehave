@@ -3,7 +3,7 @@
 namespace Auroratide.NBehave.Internal {
     public class MatcherList : IEquatable<MatcherList> {
 
-        Matcher[] matchers;
+        private Matcher[] matchers;
 
         public MatcherList() {
             this.matchers = new Matcher[0];
@@ -52,5 +52,6 @@ namespace Auroratide.NBehave.Internal {
                 
             return result;
         }
+
     }
 }

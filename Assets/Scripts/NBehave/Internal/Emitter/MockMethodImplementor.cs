@@ -57,7 +57,7 @@ namespace Auroratide.NBehave.Internal {
                     il.Emit(OpCodes.Ldarg, p + 1);            //  Get param p+1 (since param 0 is 'this') of the called method
                     if(paramTypes[p].IsValueType)             //  if int, bool, etc.
                         il.Emit(OpCodes.Box, paramTypes[p]);  //    Convert param to object
-                    il.Emit(OpCodes.Stelem, paramTypes[p]);   //  Store the param value into the object array
+                    il.Emit(OpCodes.Stelem, typeof(object));  //  Store the param value into the object array
                 }
 
                 return this;
