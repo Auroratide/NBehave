@@ -18,10 +18,28 @@ namespace Auroratide.NBehave.Integration {
             Verify.That(() => mock.NoParameters()).IsCalled();
         }
 
+        [Test] public void ShouldStubMethodWithNoParameters() {
+            int a = 2;
+            When.Called(() => mock.NoParameters()).Then.Execute((objs) => a = 3);
+
+            mock.NoParameters();
+
+            Assert.That(a, Is.EqualTo(3));
+        }
+
         [Test] public void ShouldMockMethodsWithPrimitiveParameters() {
             mock.PrimitiveParameters(7, true, 9.5f);
 
             Verify.That(() => mock.PrimitiveParameters(7, true, 9.5f)).IsCalled();
+        }
+
+        [Test] public void ShouldStubMethodWithPrimitiveParameters() {
+            int a = 2;
+            When.Called(() => mock.PrimitiveParameters(7, false, 10.3f)).Then.Execute((objs) => a = 3);
+
+            mock.PrimitiveParameters(7, false, 10.3f);
+
+            Assert.That(a, Is.EqualTo(3));
         }
 
         [Test] public void ShouldMockMethodsWithObjectParameters() {
@@ -31,6 +49,17 @@ namespace Auroratide.NBehave.Integration {
 
             Verify.That(() => mock.ObjectParameters("Hello!", o, c)).IsCalled();
         }
+
+        [Test] public void ShouldStubMethodWithObjectParameters() {
+            int a = 2;
+            object o = new object();
+            Class c = new Class(2, 3);
+            When.Called(() => mock.ObjectParameters("Hello!", o, c)).Then.Execute((objs) => a = 3);
+
+            mock.ObjectParameters("Hello!", o, c);
+
+            Assert.That(a, Is.EqualTo(3));
+        }
             
         [Test] public void ShouldMockMethodsWithStructParameters() {
             Struct s = new Struct(2, 3);
@@ -39,27 +68,49 @@ namespace Auroratide.NBehave.Integration {
             Verify.That(() => mock.StructParameters(s)).IsCalled();
         }
 
-        [Test] public void ShouldMockMethodsWithNoReturn() {
-            mock.NoReturn();
+        [Test] public void ShouldStubMethodWithStructParameters() {
+            int a = 2;
+            Struct s = new Struct(2, 3);
+            When.Called(() => mock.StructParameters(s)).Then.Execute((objs) => a = 3);
 
-            Verify.That(() => mock.NoReturn()).IsCalled();
+            mock.StructParameters(s);
+
+            Assert.That(a, Is.EqualTo(3));
         }
 
         [Test] public void ShouldMockMethodsWithPrimitiveReturn() {
+            mock.PrimitiveReturn();
+
+            Verify.That(() => mock.PrimitiveReturn()).IsCalled();
+        }
+
+        [Test] public void ShouldStubMethodsWithPrimitiveReturn() {
             When.Called(() => mock.PrimitiveReturn()).Then.Return(7);
             int answer = mock.PrimitiveReturn();
 
             Assert.That(answer, Is.EqualTo(7));
         }
 
-        [Test] public void ShouldMockMethodsWithObjectReturn() {
+        [Test] public void ShouldMockMethodWithObjectReturn() {
+            mock.ObjectReturn();
+
+            Verify.That(() => mock.ObjectReturn()).IsCalled();
+        }
+
+        [Test] public void ShouldStubMethodsWithObjectReturn() {
             When.Called(() => mock.ObjectReturn()).Then.Return("Hello!");
             string answer = mock.ObjectReturn();
 
             Assert.That(answer, Is.EqualTo("Hello!"));
         }
             
-        [Test] public void ShouldMockMethodsWithStructReturn() {
+        [Test] public void ShouldMockMethodWithStructReturn() {
+            mock.StructReturn();
+
+            Verify.That(() => mock.StructReturn()).IsCalled();
+        }
+
+        [Test] public void ShouldStubMethodsWithStructReturn() {
             When.Called(() => mock.StructReturn()).Then.Return(new Struct(2, 3));
             Struct answer = mock.StructReturn();
 
@@ -67,7 +118,19 @@ namespace Auroratide.NBehave.Integration {
             Assert.That(answer.y, Is.EqualTo(3));
         }
 
-        [Test] public void ShouldMockMethodsWithTypeParams() {
+        [Test] public void ShouldMockMethodWithTypeParams() {
+            mock.TypeParams<int>();
+            mock.TypeParams<string>();
+            mock.TypeParams<Class>();
+            mock.TypeParams<Struct>();
+
+            Verify.That(() => mock.TypeParams<int>()).IsCalled();
+            Verify.That(() => mock.TypeParams<string>()).IsCalled();
+            Verify.That(() => mock.TypeParams<Class>()).IsCalled();
+            Verify.That(() => mock.TypeParams<Struct>()).IsCalled();
+        }
+
+        [Test] public void ShouldStubMethodsWithTypeParams() {
             When.Called(() => mock.TypeParams<int>()).Then.Return(7);
             When.Called(() => mock.TypeParams<string>()).Then.Return("Hi");
             When.Called(() => mock.TypeParams<Class>()).Then.Return(new Class(2, 3));
@@ -91,7 +154,30 @@ namespace Auroratide.NBehave.Integration {
 
             Verify.That(() => mock.MultipleTypeParams<int, string>()).IsCalled();
         }
-         
+
+        [Test] public void ShouldStubMethodWithMultipleTypeParams() {
+            When.Called(() => mock.MultipleTypeParams<string, float>()).Then.Return(2);
+
+            int answer = mock.MultipleTypeParams<string, float>();
+
+            Assert.That(answer, Is.EqualTo(2));
+        }
+
+        [Test] public void ShouldMockMethodUsingGenericParamsAsArguments() {
+            Class c = new Class(2, 3);
+            Struct s = new Struct(3, 5);
+
+            mock.TypeParamsAsArguments(2);
+            mock.TypeParamsAsArguments("Hi");
+            mock.TypeParamsAsArguments(c);
+            mock.TypeParamsAsArguments(s);
+
+            Verify.That(() => mock.TypeParamsAsArguments(2)).IsCalled();
+            Verify.That(() => mock.TypeParamsAsArguments("Hi")).IsCalled();
+            Verify.That(() => mock.TypeParamsAsArguments(c)).IsCalled();
+            Verify.That(() => mock.TypeParamsAsArguments(s)).IsCalled();
+        }
+
         [Test] public void ShouldStubMethodUsingGenericParamsAsArguments() {
             Class c = new Class(2, 3);
             Struct s = new Struct(3, 5);
@@ -112,6 +198,17 @@ namespace Auroratide.NBehave.Integration {
         }
 
         [Test] public void ShouldMockMethodsWithConstrainedTypeParameters() {
+            Class c = new Class(2, 3);
+            SubClass s = new SubClass(5, 7, 11);
+
+            mock.ConstrainedTypeParam(c);
+            mock.ConstrainedTypeParam(s);
+
+            Verify.That(() => mock.ConstrainedTypeParam(c)).IsCalled();
+            Verify.That(() => mock.ConstrainedTypeParam(s)).IsCalled();
+        }
+
+        [Test] public void ShouldStubMethodsWithConstrainedTypeParameters() {
             Class c = new Class(2, 3);
             SubClass s = new SubClass(5, 7, 11);
             Class cAns = new Class(13, 17);
@@ -135,15 +232,20 @@ namespace Auroratide.NBehave.Integration {
             void ObjectParameters(string s, object o, Class c);
             void StructParameters(Struct s);
 
-            void NoReturn();
             int PrimitiveReturn();
             string ObjectReturn();
             Struct StructReturn();
 
             T TypeParams<T>();
-            void MultipleTypeParams<T1, T2>();
+            int MultipleTypeParams<T1, T2>();
             int TypeParamsAsArguments<T>(T t);
             T ConstrainedTypeParam<T>(T t) where T : Class;
+        }
+
+        private interface GenericInterface<T> {
+            int NormalMethod(string s);
+            T GenericReturn();
+            void GenericParam(T t);
         }
 
         private class Class {
