@@ -111,6 +111,24 @@ namespace Auroratide.NBehave.Integration {
             Assert.That(structAns, Is.EqualTo(11));
         }
 
+        [Test] public void ShouldMockMethodsWithConstrainedTypeParameters() {
+            Class c = new Class(2, 3);
+            SubClass s = new SubClass(5, 7, 11);
+            Class cAns = new Class(13, 17);
+            SubClass sAns = new SubClass(19, 23, 29);
+            When.Called(() => mock.ConstrainedTypeParam(c)).Then.Return(cAns);
+            When.Called(() => mock.ConstrainedTypeParam(s)).Then.Return(sAns);
+
+            var cActual = mock.ConstrainedTypeParam(c);
+            var sActual = mock.ConstrainedTypeParam(s);
+
+            Assert.That(cActual.x, Is.EqualTo(cAns.x));
+            Assert.That(cActual.y, Is.EqualTo(cAns.y));
+            Assert.That(sActual.x, Is.EqualTo(sAns.x));
+            Assert.That(sActual.y, Is.EqualTo(sAns.y));
+            Assert.That(sActual.z, Is.EqualTo(sAns.z));
+        }
+
         private interface Interface {
             void NoParameters();
             void PrimitiveParameters(int n, bool b, float f);
@@ -125,6 +143,7 @@ namespace Auroratide.NBehave.Integration {
             T TypeParams<T>();
             void MultipleTypeParams<T1, T2>();
             int TypeParamsAsArguments<T>(T t);
+            T ConstrainedTypeParam<T>(T t) where T : Class;
         }
 
         private class Class {
@@ -134,6 +153,14 @@ namespace Auroratide.NBehave.Integration {
             public Class(int x, int y) {
                 this.x = x;
                 this.y = y;
+            }
+        }
+
+        private class SubClass : Class {
+            public int z;
+
+            public SubClass(int x, int y, int z):base(x, y) {
+                this.z = z;
             }
         }
 
