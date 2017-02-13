@@ -71,15 +71,19 @@ namespace Auroratide.NBehave.Integration {
             When.Called(() => mock.TypeParams<int>()).Then.Return(7);
             When.Called(() => mock.TypeParams<string>()).Then.Return("Hi");
             When.Called(() => mock.TypeParams<Class>()).Then.Return(new Class(2, 3));
+            When.Called(() => mock.TypeParams<Struct>()).Then.Return(new Struct(5, 7));
 
             int intAnswer = mock.TypeParams<int>();
             string stringAnswer = mock.TypeParams<string>();
             Class classAnswer = mock.TypeParams<Class>();
+            Struct structAnswer = mock.TypeParams<Struct>();
 
             Assert.That(intAnswer, Is.EqualTo(7));
             Assert.That(stringAnswer, Is.EqualTo("Hi"));
             Assert.That(classAnswer.x, Is.EqualTo(2));
             Assert.That(classAnswer.y, Is.EqualTo(3));
+            Assert.That(structAnswer.x, Is.EqualTo(5));
+            Assert.That(structAnswer.y, Is.EqualTo(7));
         }
             
         [Test] public void ShouldMockMethodsWithMultipleTypeParams() {
@@ -88,7 +92,6 @@ namespace Auroratide.NBehave.Integration {
             Verify.That(() => mock.MultipleTypeParams<int, string>()).IsCalled();
         }
          
-        [Ignore("Not yet suppoted")]
         [Test] public void ShouldStubMethodUsingGenericParamsAsArguments() {
             Class c = new Class(2, 3);
             Struct s = new Struct(3, 5);
