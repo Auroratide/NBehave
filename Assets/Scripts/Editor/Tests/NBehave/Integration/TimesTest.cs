@@ -4,7 +4,7 @@ using NUnit.Framework;
 namespace Auroratide.NBehave.Integration {
     using Exceptions;
 
-    public class TimesIntegrationTest {
+    public class TimesTest {
 
         Mock mock;
 

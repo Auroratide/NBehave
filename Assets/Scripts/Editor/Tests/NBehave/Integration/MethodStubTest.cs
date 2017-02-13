@@ -3,7 +3,7 @@ using NUnit.Framework;
 
 namespace Auroratide.NBehave.Integration {
 
-    public class MethodStubIntegrationTest {
+    public class MethodStubTest {
         private const int DEFAULT_INT = 0;
         private const string DEFAULT_STRING = "Default String";
         
