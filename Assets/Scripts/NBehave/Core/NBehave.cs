@@ -1,4 +1,7 @@
-﻿namespace Auroratide.NBehave {
+﻿using System;
+using System.Linq;
+
+namespace Auroratide.NBehave {
     using Internal;
 
     public class NBehave {
@@ -19,7 +22,7 @@
         }
 
         public MethodCall Call(params object[] arguments) {
-            string method = new System.Diagnostics.StackFrame(1).GetMethod().Name;
+            string method = new MethodNamer(new System.Diagnostics.StackFrame(1).GetMethod()).Name();
 
             callMemory.Call(method, arguments);
             return new MethodCall(stubs.Get(method), arguments);

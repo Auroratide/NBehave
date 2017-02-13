@@ -67,27 +67,45 @@ namespace Auroratide.NBehave.Integration {
             Assert.That(answer.y, Is.EqualTo(3));
         }
 
-        //[Ignore("Crashes")]
         [Test] public void ShouldMockMethodsWithTypeParams() {
-            //When.Called(() => mock.TypeParams<int>()).Then.Return(7);
+            When.Called(() => mock.TypeParams<int>()).Then.Return(7);
             When.Called(() => mock.TypeParams<string>()).Then.Return("Hi");
-            //When.Called(() => mock.TypeParams<Class>()).Then.Return(new Class(2, 3));
+            When.Called(() => mock.TypeParams<Class>()).Then.Return(new Class(2, 3));
 
-            //int intAnswer = mock.TypeParams<int>();
+            int intAnswer = mock.TypeParams<int>();
             string stringAnswer = mock.TypeParams<string>();
-            //Class classAnswer = mock.TypeParams<Class>();
+            Class classAnswer = mock.TypeParams<Class>();
 
-            //Assert.That(intAnswer, Is.EqualTo(7));
+            Assert.That(intAnswer, Is.EqualTo(7));
             Assert.That(stringAnswer, Is.EqualTo("Hi"));
-            //Assert.That(classAnswer.x, Is.EqualTo(2));
-            //Assert.That(classAnswer.y, Is.EqualTo(3));
+            Assert.That(classAnswer.x, Is.EqualTo(2));
+            Assert.That(classAnswer.y, Is.EqualTo(3));
         }
-
-        [Ignore("Crashes")]
+            
         [Test] public void ShouldMockMethodsWithMultipleTypeParams() {
             mock.MultipleTypeParams<int, string>();
 
             Verify.That(() => mock.MultipleTypeParams<int, string>()).IsCalled();
+        }
+         
+        [Ignore("Not yet suppoted")]
+        [Test] public void ShouldStubMethodUsingGenericParamsAsArguments() {
+            Class c = new Class(2, 3);
+            Struct s = new Struct(3, 5);
+            When.Called(() => mock.TypeParamsAsArguments<int>(2)).Then.Return(3);
+            When.Called(() => mock.TypeParamsAsArguments<string>("Hi")).Then.Return(5);
+            When.Called(() => mock.TypeParamsAsArguments<Class>(c)).Then.Return(7);
+            When.Called(() => mock.TypeParamsAsArguments<Struct>(s)).Then.Return(11);
+
+            int intAns = mock.TypeParamsAsArguments(2);
+            int stringAns = mock.TypeParamsAsArguments("Hi");
+            int classAns = mock.TypeParamsAsArguments(c);
+            int structAns = mock.TypeParamsAsArguments(s);
+
+            Assert.That(intAns, Is.EqualTo(3));
+            Assert.That(stringAns, Is.EqualTo(5));
+            Assert.That(classAns, Is.EqualTo(7));
+            Assert.That(structAns, Is.EqualTo(11));
         }
 
         private interface Interface {
@@ -103,6 +121,7 @@ namespace Auroratide.NBehave.Integration {
 
             T TypeParams<T>();
             void MultipleTypeParams<T1, T2>();
+            int TypeParamsAsArguments<T>(T t);
         }
 
         private class Class {
