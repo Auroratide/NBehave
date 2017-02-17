@@ -2,6 +2,8 @@
 using System.Linq.Expressions;
 
 namespace Auroratide.NBehave {
+    using Core;
+
     public class Verify {
         public static Verifier That(Expression<Action> call) {
             var method = call.Body as MethodCallExpression;

@@ -1,3 +1,3 @@
-﻿namespace Auroratide.NBehave {
+﻿namespace Auroratide.NBehave.Core {
     public delegate object ExecutesDelegate(params object[] arguments);
 }

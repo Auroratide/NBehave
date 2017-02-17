@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
 
 namespace Auroratide.NBehave.Internal {
-    
+    using Core;
+
     public class MethodStub {
 
         private Dictionary<MatcherList, List<StubAction>> returns;

@@ -2,6 +2,7 @@
 using NUnit.Framework;
 
 namespace Auroratide.NBehave.Integration {
+    using Core;
 
     public class MethodStubTest {
         private const int DEFAULT_INT = 0;

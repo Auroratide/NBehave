@@ -4,6 +4,8 @@ using System.Text.RegularExpressions;
 using System.Linq.Expressions;
 
 namespace Auroratide.NBehave.Internal {
+    using Core;
+
     public static class MatcherFactory {
 
     //  Yes, it's magic.

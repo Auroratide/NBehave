@@ -1,6 +1,8 @@
 ﻿using System;
 
 namespace Auroratide.NBehave.Internal {
+    using Core;
+
     public class MatcherList : IEquatable<MatcherList> {
 
         private Matcher[] matchers;

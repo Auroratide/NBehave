@@ -1,4 +1,6 @@
 ﻿namespace Auroratide.NBehave.Internal {
+    using Core;
+
     public class NotMatcher : Matcher {
         private Matcher matcher;
 

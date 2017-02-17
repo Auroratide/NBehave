@@ -35,7 +35,7 @@ namespace Auroratide.NBehave {
             return matcher;
         }
 
-        public static T Matches<T>(Matcher matcher) {
+        public static T Matches<T>(Core.Matcher matcher) {
             return default(T);
         }
 

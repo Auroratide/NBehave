@@ -1,4 +1,5 @@
 ﻿namespace Auroratide.NBehave.Internal {
+    using Core;
 
     public class Executes : StubAction {
         private object[] arguments;

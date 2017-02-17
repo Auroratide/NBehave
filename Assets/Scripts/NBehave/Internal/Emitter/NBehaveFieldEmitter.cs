@@ -3,6 +3,8 @@ using System.Reflection;
 using System.Reflection.Emit;
 
 namespace Auroratide.NBehave.Internal {
+    using Core;
+
     public class NBehaveFieldEmitter {
         private TypeBuilder typeBuilder;
 

@@ -6,6 +6,8 @@ using System.Reflection.Emit;
 using UnityEngine;
 
 namespace Auroratide.NBehave.Internal {
+    using Core;
+
     public class MockMethodImplementor {
         private TypeBuilder typeBuilder;
         private FieldInfo nbehave;

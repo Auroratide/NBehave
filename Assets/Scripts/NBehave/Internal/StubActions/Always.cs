@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 
 namespace Auroratide.NBehave.Internal {
+    using Core;
+
     public class Always : StubAction {
         private StubAction previous;
         private List<StubAction> returns;

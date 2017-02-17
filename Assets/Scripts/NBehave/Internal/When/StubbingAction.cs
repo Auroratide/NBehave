@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 
 namespace Auroratide.NBehave.Internal {
+    using Core;
 
-    public class StubbingAction : Auroratide.NBehave.StubbingAction {
+    public class StubbingAction : Core.StubbingAction {
         private object[] arguments;
         private List<StubAction> returns;
 
@@ -12,17 +13,17 @@ namespace Auroratide.NBehave.Internal {
             this.returns = returns;
         }
 
-        public Auroratide.NBehave.OngoingStubbing Return(object obj) {
+        public Core.OngoingStubbing Return(object obj) {
             returns.Add(new Returns(obj));
             return new OngoingStubbing(this, returns);
         }
 
-        public Auroratide.NBehave.OngoingStubbing Throw(Exception exception) {
+        public Core.OngoingStubbing Throw(Exception exception) {
             returns.Add(new Throws(exception));
             return new OngoingStubbing(this, returns);
         }
 
-        public Auroratide.NBehave.OngoingStubbing Execute(ExecutesDelegate function) {
+        public Core.OngoingStubbing Execute(ExecutesDelegate function) {
             returns.Add(new Executes(function, arguments));
             return new OngoingStubbing(this, returns);
         }

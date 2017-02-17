@@ -2,6 +2,8 @@
 using System.Linq;
 
 namespace Auroratide.NBehave.Internal {
+    using Core;
+
     public class ContainsMatcher<T> : Matcher {
         private T obj;
 

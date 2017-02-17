@@ -1,4 +1,6 @@
 ﻿namespace Auroratide.NBehave.Internal {
+    using Core;
+
     public class AnyOfMatcher<T> : Matcher {
         public AnyOfMatcher() {}
 

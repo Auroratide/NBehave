@@ -1,4 +1,6 @@
 ﻿namespace Auroratide.NBehave.Internal {
+    using Core;
+
     public class NullMatcher : Matcher {
         public NullMatcher() {}
 

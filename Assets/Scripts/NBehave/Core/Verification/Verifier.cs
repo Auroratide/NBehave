@@ -1,4 +1,4 @@
-﻿namespace Auroratide.NBehave {
+﻿namespace Auroratide.NBehave.Core {
     public interface Verifier {
         VerifierInteractions IsCalled();
         void IsNotCalled();

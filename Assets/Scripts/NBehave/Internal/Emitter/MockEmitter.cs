@@ -3,6 +3,7 @@ using System.Reflection;
 using System.Reflection.Emit;
 
 namespace Auroratide.NBehave.Internal {
+    using Core;
 
     public class MockEmitter<I> where I : class {
         

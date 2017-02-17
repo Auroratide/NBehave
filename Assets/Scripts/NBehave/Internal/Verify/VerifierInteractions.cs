@@ -1,8 +1,8 @@
 ﻿namespace Auroratide.NBehave.Internal {
-    public class VerifierInteractions : Auroratide.NBehave.VerifierInteractions {
-        private Verifier verifier;
+    public class VerifierInteractions : Core.VerifierInteractions {
+        private Core.Verifier verifier;
 
-        public VerifierInteractions(Verifier verifier) {
+        public VerifierInteractions(Core.Verifier verifier) {
             this.verifier = verifier;
         }
 

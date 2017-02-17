@@ -2,6 +2,7 @@
 using NUnit.Framework;
 
 namespace Auroratide.NBehave.Integration {
+    using Core;
     using Exceptions;
 
     public class TimesTest {

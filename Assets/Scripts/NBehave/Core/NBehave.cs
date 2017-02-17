@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace Auroratide.NBehave {
+namespace Auroratide.NBehave.Core {
     using Internal;
 
     public class NBehave {

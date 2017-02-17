@@ -1,7 +1,8 @@
 ﻿namespace Auroratide.NBehave.Internal {
+    using Core;
     using Exceptions;
     
-    public class Verifier : Auroratide.NBehave.Verifier {
+    public class Verifier : Core.Verifier {
 
         private NBehaveMock mock;
         private string method;
@@ -13,7 +14,7 @@
             this.arguments = arguments;
         }
 
-        public Auroratide.NBehave.VerifierInteractions IsCalled() {
+        public Core.VerifierInteractions IsCalled() {
             HasInteractions(new AtLeast(1));
             return new VerifierInteractions(this);
         }

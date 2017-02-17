@@ -1,6 +1,8 @@
 ﻿using System.Text.RegularExpressions;
 
 namespace Auroratide.NBehave.Internal {
+    using Core;
+
     public class RegexMatcher : Matcher {
 
         private Regex regex;

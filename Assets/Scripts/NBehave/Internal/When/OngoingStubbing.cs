@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
 
 namespace Auroratide.NBehave.Internal {
-    public class OngoingStubbing : Auroratide.NBehave.OngoingStubbing {
+    using Core;
+
+    public class OngoingStubbing : Core.OngoingStubbing {
         private StubbingAction action;
         private List<StubAction> returns;
 
@@ -10,7 +12,7 @@ namespace Auroratide.NBehave.Internal {
             this.returns = returns;
         }
 
-        public Auroratide.NBehave.StubbingAction Then {
+        public Core.StubbingAction Then {
             get { return action; }
         }
 

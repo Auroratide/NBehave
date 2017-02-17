@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Auroratide.NBehave {
+namespace Auroratide.NBehave.Core {
 
     public class NBehaviour : MonoBehaviour, NBehaveMock {
 

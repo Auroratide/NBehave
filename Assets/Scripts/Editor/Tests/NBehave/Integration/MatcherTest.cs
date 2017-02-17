@@ -6,6 +6,7 @@ using NUnit.Framework;
 using System.Text.RegularExpressions;
 
 namespace Auroratide.NBehave.Integration {
+    using Core;
 
     public class MatcherTest {
         private const int DEFAULT_INT = 0;
