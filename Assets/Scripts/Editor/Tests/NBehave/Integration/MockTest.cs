@@ -12,6 +12,18 @@ namespace Auroratide.NBehave.Integration {
             mock = Mock.Basic<Interface>();
         }
 
+        [Test] public void ShouldStubGetter() {
+            When.Called(() => mock.Getter).Then.Return(3);
+
+            Assert.That(mock.Getter, Is.EqualTo(3));
+        }
+
+        [Test] public void ShouldStubProperty() {
+            When.Called(() => mock.Property).Then.Return(5);
+
+            Assert.That(mock.Property, Is.EqualTo(5));
+        }
+
         [Test] public void ShouldMockMethodWithNoParameters() {
             mock.NoParameters();
 
@@ -226,7 +238,78 @@ namespace Auroratide.NBehave.Integration {
             Assert.That(sActual.z, Is.EqualTo(sAns.z));
         }
 
+        [Test] public void ShouldMockOverloadedMethod() {
+            int n = 3;
+            string s = "string";
+
+            mock.Overloaded();
+
+            Verify.That(() => mock.Overloaded()).IsCalled();
+            Verify.That(() => mock.Overloaded(n)).IsNotCalled();
+            Verify.That(() => mock.Overloaded(s)).IsNotCalled();
+            Verify.That(() => mock.Overloaded(n, s)).IsNotCalled();
+
+            mock.Overloaded(n);
+
+            Verify.That(() => mock.Overloaded(n)).IsCalled();
+            Verify.That(() => mock.Overloaded(s)).IsNotCalled();
+            Verify.That(() => mock.Overloaded(n, s)).IsNotCalled();
+
+            mock.Overloaded(s);
+
+            Verify.That(() => mock.Overloaded(s)).IsCalled();
+            Verify.That(() => mock.Overloaded(n, s)).IsNotCalled();
+
+            mock.Overloaded(n, s);
+
+            Verify.That(() => mock.Overloaded(n, s)).IsCalled();
+        }
+
+        [Test] public void ShouldStubOverloadedMethod() {
+            int n = 3;
+            string s = "string";
+            When.Called(() => mock.Overloaded()).Then.Return(2);
+            When.Called(() => mock.Overloaded(n)).Then.Return(3);
+            When.Called(() => mock.Overloaded(s)).Then.Return(5);
+            When.Called(() => mock.Overloaded(n, s)).Then.Return(7);
+
+            Assert.That(mock.Overloaded(), Is.EqualTo(2));
+            Assert.That(mock.Overloaded(n), Is.EqualTo(3));
+            Assert.That(mock.Overloaded(s), Is.EqualTo(5));
+            Assert.That(mock.Overloaded(n, s), Is.EqualTo(7));
+        }
+
+        [Ignore("fails")]
+        [Test] public void ShouldMockMethodsWithContinuousParams() {
+            mock.Continuous(2);
+            mock.Continuous(3, 5);
+            mock.Continuous(7, 11, 13);
+
+            Verify.That(() => mock.Continuous(2)).IsCalled();
+            Verify.That(() => mock.Continuous(3, 5)).IsCalled();
+            Verify.That(() => mock.Continuous(7, 11, 13)).IsCalled();
+
+            int[] ints = new int[] { 1, 2, 3, 4 };
+            mock.Continuous(ints);
+
+            Verify.That(() => mock.Continuous(1, 2, 3, 4)).IsCalled();
+        }
+
+        [Ignore("fails")]
+        [Test] public void ShouldStubMethodsWithContinuousParams() {
+            When.Called(() => mock.Continuous(2)).Then.Return("one");
+            When.Called(() => mock.Continuous(3, 5)).Then.Return("two");
+            When.Called(() => mock.Continuous(7, 11, 13)).Then.Return("three");
+
+            Assert.That(mock.Continuous(2), Is.EqualTo("one"));
+            Assert.That(mock.Continuous(3, 5), Is.EqualTo("two"));
+            Assert.That(mock.Continuous(7, 11, 13), Is.EqualTo("three"));
+        }
+
         private interface Interface {
+            int Getter { get; }
+            int Property { get; set; }
+
             void NoParameters();
             void PrimitiveParameters(int n, bool b, float f);
             void ObjectParameters(string s, object o, Class c);
@@ -240,6 +323,13 @@ namespace Auroratide.NBehave.Integration {
             int MultipleTypeParams<T1, T2>();
             int TypeParamsAsArguments<T>(T t);
             T ConstrainedTypeParam<T>(T t) where T : Class;
+
+            int Overloaded();
+            int Overloaded(int n);
+            int Overloaded(string s);
+            int Overloaded(int n, string s);
+
+            string Continuous(params int[] args);
         }
 
         private interface GenericInterface<T> {
