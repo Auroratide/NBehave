@@ -3,7 +3,7 @@
 namespace Auroratide.NBehave.Internal {
     using Core;
 
-    public class MethodStub {
+    public class MethodStub : IMethodStub {
 
         private Dictionary<MatcherList, List<StubAction>> returns;
 
@@ -12,7 +12,7 @@ namespace Auroratide.NBehave.Internal {
             this.returns[new MatcherList()] = new List<StubAction>();
         }
 
-        public OngoingStubbing With(params object[] arguments) {
+        public Core.OngoingStubbing With(params object[] arguments) {
             MatcherList matchers = new MatcherList(arguments);
             returns[matchers] = new List<StubAction>();
 

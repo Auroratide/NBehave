@@ -3,10 +3,10 @@
 
     public class MethodCall {
 
-        private MethodStub stub;
+        private IMethodStub stub;
         private object[] arguments;
         
-        public MethodCall(MethodStub stub, object[] arguments) {
+        public MethodCall(IMethodStub stub, object[] arguments) {
             this.stub = stub;
             this.arguments = arguments;
         }
