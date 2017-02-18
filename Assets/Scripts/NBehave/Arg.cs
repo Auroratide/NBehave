@@ -15,8 +15,8 @@ namespace Auroratide.NBehave {
             return default(ListType);
         }
 
-        public static T Null<T>() {
-            return default(T);
+        public static T Null<T>() where T : class {
+            return null;
         }
 
         public static T Any<T>() {
