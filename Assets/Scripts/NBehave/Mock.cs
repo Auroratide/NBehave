@@ -9,12 +9,12 @@ namespace Auroratide.NBehave {
 
         private static ModuleBuilder moduleBuilder = null;
 
-        public static T Behaviour<T>() where T : class {
-            return null;
+        public static MockedType<T> Behaviour<T>() where T : class {
+            return new Internal.MockedType<T>(new Internal.NBehaviourEmitter<T>(GetModuleBuilder()).Emit());
         }
 
         public static MockedType<T> Basic<T>() where T : class {
-            return new Internal.MockedType<T>(new Internal.MockEmitter<T>(GetModuleBuilder()).Emit());
+            return new Internal.MockedType<T>(new Internal.BasicEmitter<T>(GetModuleBuilder()).Emit());
         }
 
         private static ModuleBuilder GetModuleBuilder() {

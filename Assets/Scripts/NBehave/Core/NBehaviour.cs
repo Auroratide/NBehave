@@ -6,7 +6,11 @@ namespace Auroratide.NBehave.Core {
 
         private NBehave nbehave = new NBehave();
         public NBehave NBehave {
-            get { return nbehave; }
+            get {
+                if(nbehave == null)
+                    nbehave = new NBehave();
+                return nbehave;
+            }
         }
 
     }

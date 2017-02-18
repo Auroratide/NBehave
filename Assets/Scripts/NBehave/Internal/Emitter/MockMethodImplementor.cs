@@ -10,9 +10,9 @@ namespace Auroratide.NBehave.Internal {
 
     public class MockMethodImplementor {
         private TypeBuilder typeBuilder;
-        private FieldInfo nbehave;
+        private PropertyInfo nbehave;
 
-        public MockMethodImplementor(TypeBuilder typeBuilder, FieldInfo nbehave) {
+        public MockMethodImplementor(TypeBuilder typeBuilder, PropertyInfo nbehave) {
             this.typeBuilder = typeBuilder;
             this.nbehave = nbehave;
         }
@@ -75,10 +75,10 @@ namespace Auroratide.NBehave.Internal {
                 return this;
             }
 
-            public Emit CallNBehaveWithParamValues(FieldInfo nbehave) {
-                il.Emit(OpCodes.Ldarg_0);         //  Stack: this
-                il.Emit(OpCodes.Ldfld, nbehave);  //  Stack: nbehave
-                il.Emit(OpCodes.Ldloc, objs);     //  Stack: nbehave, params
+            public Emit CallNBehaveWithParamValues(PropertyInfo nbehave) {
+                il.Emit(OpCodes.Ldarg_0);                       //  Stack: this
+                il.Emit(OpCodes.Call, nbehave.GetGetMethod());  //  Stack: nbehave
+                il.Emit(OpCodes.Ldloc, objs);                   //  Stack: nbehave, params
 
                 il.Emit(OpCodes.Call, typeof(NBehave).GetMethod("Call")); // nbehave.Call(params)
 
