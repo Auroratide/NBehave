@@ -4,7 +4,7 @@ using System.Linq.Expressions;
 namespace Auroratide.NBehave {
     using Core;
 
-    public class When {
+    public static class When {
         public static OngoingStubbing Called(Expression<Action> call) {
             return StubMethod(call.Body as MethodCallExpression);
         }
