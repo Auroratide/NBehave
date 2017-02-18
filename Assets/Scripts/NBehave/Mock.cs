@@ -3,7 +3,7 @@ using System.Reflection;
 using System.Reflection.Emit;
 
 namespace Auroratide.NBehave {
-    using Internal;
+    using Core;
 
     public static class Mock {
 
@@ -13,8 +13,8 @@ namespace Auroratide.NBehave {
             return null;
         }
 
-        public static T Basic<T>() where T : class {
-            return (T)(Activator.CreateInstance(new MockEmitter<T>(GetModuleBuilder()).Emit()));
+        public static MockedType<T> Basic<T>() where T : class {
+            return new Internal.MockedType<T>(new Internal.MockEmitter<T>(GetModuleBuilder()).Emit());
         }
 
         private static ModuleBuilder GetModuleBuilder() {
