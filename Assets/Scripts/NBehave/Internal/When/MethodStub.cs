@@ -7,8 +7,8 @@ namespace Auroratide.NBehave.Internal {
 
         private Dictionary<MatcherList, List<StubAction>> returns;
 
-        public MethodStub() {
-            this.returns = new Dictionary<MatcherList, List<StubAction>>();
+        public MethodStub(Dictionary<MatcherList, List<StubAction>> returns) {
+            this.returns = returns;
             this.returns[new MatcherList()] = new List<StubAction>();
         }
 
