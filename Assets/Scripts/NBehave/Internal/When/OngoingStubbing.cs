@@ -1,13 +1,12 @@
 ﻿using System.Collections.Generic;
 
 namespace Auroratide.NBehave.Internal {
-    using Core;
 
     public class OngoingStubbing : Core.OngoingStubbing {
-        private StubbingAction action;
-        private List<StubAction> returns;
+        private Core.StubbingAction action;
+        private List<Core.StubAction> returns;
 
-        public OngoingStubbing(StubbingAction action, List<StubAction> returns) {
+        public OngoingStubbing(Core.StubbingAction action, List<Core.StubAction> returns) {
             this.action = action;
             this.returns = returns;
         }
