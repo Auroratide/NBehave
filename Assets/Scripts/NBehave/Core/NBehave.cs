@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace Auroratide.NBehave.Core {
     using Internal;
@@ -10,7 +11,7 @@ namespace Auroratide.NBehave.Core {
 
         public NBehave() {
             callMemory = new CallMemory();
-            stubs = new MethodStubs();
+            stubs = new MethodStubs(new Dictionary<string, IMethodStub>());
         }
 
         public CallMemory CallMemory {

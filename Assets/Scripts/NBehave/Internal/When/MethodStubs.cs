@@ -2,13 +2,13 @@
 
 namespace Auroratide.NBehave.Internal {
     public class MethodStubs {
-        private Dictionary<string, MethodStub> methods;
+        private Dictionary<string, IMethodStub> methods;
 
-        public MethodStubs() {
-            this.methods = new Dictionary<string, MethodStub>();
+        public MethodStubs(Dictionary<string, IMethodStub> methods) {
+            this.methods = methods;
         }
 
-        public MethodStub Get(string method) {
+        public IMethodStub Get(string method) {
             if(!methods.ContainsKey(method))
                 methods[method] = new MethodStub(new Dictionary<MatcherList, List<Core.StubAction>>());
             return methods[method];
