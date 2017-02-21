@@ -3,7 +3,7 @@
 namespace Auroratide.NBehave.Internal {
     using Core;
 
-    public class MatcherList : IEquatable<MatcherList> {
+    public class MatcherList : IMatcherList, IEquatable<MatcherList> {
 
         private Matcher[] matchers;
 

@@ -7,11 +7,11 @@ namespace Auroratide.NBehave.Internal {
 
         private Dictionary<string, List<object[]>> methods;
 
-        public CallMemory() {
-            methods = new Dictionary<string, List<object[]>>();
+        public CallMemory(Dictionary<string, List<object[]>> methods) {
+            this.methods = methods;
         }
 
-        public int TimesCalled(string method, MatcherList arguments) {
+        public int TimesCalled(string method, IMatcherList arguments) {
             if(!methods.ContainsKey(method))
                 return 0;
 

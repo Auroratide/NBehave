@@ -10,7 +10,7 @@ namespace Auroratide.NBehave.Core {
         private MethodStubs stubs;
 
         public NBehave() {
-            callMemory = new CallMemory();
+            callMemory = new CallMemory(new Dictionary<string, List<object[]>>());
             stubs = new MethodStubs(new Dictionary<string, IMethodStub>());
         }
 
