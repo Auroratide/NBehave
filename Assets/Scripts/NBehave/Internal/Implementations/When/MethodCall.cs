@@ -1,7 +1,6 @@
 ﻿namespace Auroratide.NBehave.Internal {
-    using Core;
 
-    public class MethodCall {
+    public class MethodCall : IMethodCall {
 
         private IMethodStub stub;
         private object[] arguments;
@@ -12,7 +11,7 @@
         }
 
         public T AndReturn<T>() {
-            StubAction action = stub.NextReturnAction(arguments);
+            Core.StubAction action = stub.NextReturnAction(arguments);
             if (action == null)
                 return default(T);
             else 
@@ -20,7 +19,7 @@
         }
 
         public void AndExecute() {
-            StubAction action = stub.NextReturnAction(arguments);
+            Core.StubAction action = stub.NextReturnAction(arguments);
             if (action != null)
                 action.Return();
         }
