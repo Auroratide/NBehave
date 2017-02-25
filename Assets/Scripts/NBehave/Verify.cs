@@ -2,12 +2,11 @@
 using System.Linq.Expressions;
 
 namespace Auroratide.NBehave {
-    using Core;
 
     public static class Verify {
-        public static Verifier That(Expression<Action> call) {
+        public static Core.Verifier That(Expression<Action> call) {
             var method = call.Body as MethodCallExpression;
-            NBehaveMock mock = (NBehaveMock)Expression.Lambda<Func<object>>(method.Object).Compile().Invoke();
+            Core.NBehaveMock mock = (Core.NBehaveMock)Expression.Lambda<Func<object>>(method.Object).Compile().Invoke();
             string methodName = new Internal.MethodNamer(method.Method).Name();
             object[] arguments = new object[method.Arguments.Count];
             for(int i = 0; i < arguments.Length; ++i)

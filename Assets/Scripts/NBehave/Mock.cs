@@ -3,17 +3,16 @@ using System.Reflection;
 using System.Reflection.Emit;
 
 namespace Auroratide.NBehave {
-    using Core;
 
     public static class Mock {
 
         private static ModuleBuilder moduleBuilder = null;
 
-        public static MockedType<T> Behaviour<T>() where T : class {
+        public static Core.MockedType<T> Behaviour<T>() where T : class {
             return new Internal.MockedType<T>(new Internal.NBehaviourEmitter<T>(GetModuleBuilder()).Emit());
         }
 
-        public static MockedType<T> Basic<T>() where T : class {
+        public static Core.MockedType<T> Basic<T>() where T : class {
             return new Internal.MockedType<T>(new Internal.BasicEmitter<T>(GetModuleBuilder()).Emit());
         }
 
