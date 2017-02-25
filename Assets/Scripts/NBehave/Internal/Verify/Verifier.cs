@@ -5,7 +5,7 @@
 
         private Core.NBehaveMock mock;
         private string method;
-        private MatcherList arguments;
+        private IMatcherList arguments;
 
         public Verifier(Core.NBehaveMock mock, string method, IMatcherList arguments) {
             this.mock = mock;
