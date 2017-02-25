@@ -6,7 +6,6 @@ using System.Reflection.Emit;
 using UnityEngine;
 
 namespace Auroratide.NBehave.Internal {
-    using Core;
 
     public class MockMethodImplementor {
         private TypeBuilder typeBuilder;
@@ -80,7 +79,7 @@ namespace Auroratide.NBehave.Internal {
                 il.Emit(OpCodes.Call, nbehave.GetGetMethod());  //  Stack: nbehave
                 il.Emit(OpCodes.Ldloc, objs);                   //  Stack: nbehave, params
 
-                il.Emit(OpCodes.Call, typeof(NBehave).GetMethod("Call")); // nbehave.Call(params)
+                il.Emit(OpCodes.Call, typeof(Core.MockProxy).GetMethod("Call")); // nbehave.Call(params)
 
                 return this;
             }

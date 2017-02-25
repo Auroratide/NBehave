@@ -131,13 +131,13 @@ namespace Auroratide.NBehave.Integration {
         }
 
         private class Mock : NBehaveMock {
-            private NBehave nbehave;
-            public NBehave NBehave {
+            private MockProxy nbehave;
+            public MockProxy NBehave {
                 get { return nbehave; }
             }
 
             public Mock() {
-                nbehave = new NBehave();
+                nbehave = new Internal.MockProxy();
             }
 
             public int Property {

@@ -3,7 +3,6 @@ using System.Reflection;
 using System.Reflection.Emit;
 
 namespace Auroratide.NBehave.Internal {
-    using Core;
 
     public class NBehavePropertyBuilder {
         private TypeBuilder typeBuilder;
@@ -11,12 +10,12 @@ namespace Auroratide.NBehave.Internal {
 
         public NBehavePropertyBuilder(TypeBuilder typeBuilder) {
             this.typeBuilder = typeBuilder;
-            nbehaveField = typeBuilder.DefineField("nbehave", typeof(NBehave), FieldAttributes.Private);
+            nbehaveField = typeBuilder.DefineField("nbehave", typeof(MockProxy), FieldAttributes.Private);
         }
 
         public PropertyInfo Build() {
-            PropertyBuilder propertyBuilder = typeBuilder.DefineProperty("NBehave", PropertyAttributes.HasDefault, typeof(NBehave), null);
-            MethodBuilder mb = typeBuilder.DefineMethod("get_NBehave", MethodAttributes.Public | MethodAttributes.SpecialName | MethodAttributes.HideBySig | MethodAttributes.Virtual, typeof(NBehave), Type.EmptyTypes);
+            PropertyBuilder propertyBuilder = typeBuilder.DefineProperty("NBehave", PropertyAttributes.HasDefault, typeof(MockProxy), null);
+            MethodBuilder mb = typeBuilder.DefineMethod("get_NBehave", MethodAttributes.Public | MethodAttributes.SpecialName | MethodAttributes.HideBySig | MethodAttributes.Virtual, typeof(MockProxy), Type.EmptyTypes);
             ILGenerator il = mb.GetILGenerator();
 
             il.Emit(OpCodes.Ldarg_0); // this
@@ -25,13 +24,13 @@ namespace Auroratide.NBehave.Internal {
 
             propertyBuilder.SetGetMethod(mb);
 
-            typeBuilder.DefineMethodOverride(mb, typeof(NBehaveMock).GetMethod("get_NBehave"));
+            typeBuilder.DefineMethodOverride(mb, typeof(Core.NBehaveMock).GetMethod("get_NBehave"));
 
             return propertyBuilder;
         }
 
         public void Instantiate(ILGenerator il) {
-            il.Emit(OpCodes.Newobj, typeof(NBehave).GetConstructor(Type.EmptyTypes));
+            il.Emit(OpCodes.Newobj, typeof(MockProxy).GetConstructor(Type.EmptyTypes));
             il.Emit(OpCodes.Stfld, nbehaveField);
         }
     }
