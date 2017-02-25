@@ -1,5 +1,5 @@
 ﻿namespace Auroratide.NBehave.Unit.Mock {
-    public class MethodCall : Internal.IMethodCall {
+    public class MethodCall : Core.MethodCall {
         
         public ReturnList Returns = new ReturnList();
 

@@ -3,7 +3,7 @@
 namespace Auroratide.NBehave.Internal {
     using Core;
 
-    public class MatcherList : IMatcherList, IEquatable<MatcherList> {
+    public class MatcherList : Core.MatcherList {
 
         private Matcher[] matchers;
 
@@ -32,7 +32,8 @@ namespace Auroratide.NBehave.Internal {
             }
         }
 
-        public bool Equals(MatcherList other) {
+        public bool Equals(Core.MatcherList other_) {
+            MatcherList other = (MatcherList)other_;
             if (this.matchers.Length != other.matchers.Length)
                 return false;
 

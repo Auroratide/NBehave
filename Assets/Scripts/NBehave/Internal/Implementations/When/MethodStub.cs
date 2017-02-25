@@ -2,17 +2,17 @@
 
 namespace Auroratide.NBehave.Internal {
 
-    public class MethodStub : IMethodStub {
+    public class MethodStub : Core.MethodStub {
 
-        private Dictionary<MatcherList, List<Core.StubAction>> returns;
+        private Dictionary<Core.MatcherList, List<Core.StubAction>> returns;
 
-        public MethodStub(Dictionary<MatcherList, List<Core.StubAction>> returns) {
+        public MethodStub(Dictionary<Core.MatcherList, List<Core.StubAction>> returns) {
             this.returns = returns;
             this.returns[new MatcherList()] = new List<Core.StubAction>();
         }
 
         public Core.OngoingStubbing With(params object[] arguments) {
-            MatcherList matchers = new MatcherList(arguments);
+            Core.MatcherList matchers = new MatcherList(arguments);
             returns[matchers] = new List<Core.StubAction>();
 
             return new OngoingStubbing(new StubbingAction(arguments, returns[matchers]), returns[matchers]);
@@ -29,7 +29,7 @@ namespace Auroratide.NBehave.Internal {
         }
 
         private List<Core.StubAction> FindReturnList(object[] arguments) {
-            foreach(MatcherList matchers in returns.Keys) {
+            foreach(Core.MatcherList matchers in returns.Keys) {
                 if (matchers.MatchesAll(arguments))
                     return returns[matchers];
             }

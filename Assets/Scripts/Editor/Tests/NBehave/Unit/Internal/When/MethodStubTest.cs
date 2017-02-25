@@ -8,11 +8,11 @@ namespace Auroratide.NBehave.Unit {
 
     public class MethodStubTest {
 
-        Dictionary<MatcherList, List<Core.StubAction>> returns;
+        Dictionary<Core.MatcherList, List<Core.StubAction>> returns;
         MethodStub methodStub;
 
         [SetUp] public void Init() {
-            returns = new Dictionary<MatcherList, List<Core.StubAction>>();
+            returns = new Dictionary<Core.MatcherList, List<Core.StubAction>>();
             methodStub = new MethodStub(returns);
         }
 

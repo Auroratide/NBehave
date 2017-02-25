@@ -1,11 +1,11 @@
 ﻿namespace Auroratide.NBehave.Internal {
 
-    public class MethodCall : IMethodCall {
+    public class MethodCall : Core.MethodCall {
 
-        private IMethodStub stub;
+        private Core.MethodStub stub;
         private object[] arguments;
         
-        public MethodCall(IMethodStub stub, object[] arguments) {
+        public MethodCall(Core.MethodStub stub, object[] arguments) {
             this.stub = stub;
             this.arguments = arguments;
         }

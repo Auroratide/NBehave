@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace Auroratide.NBehave.Internal {
 
-    public class CallMemory {
+    public class CallMemory : Core.CallMemory {
 
         private Dictionary<string, List<object[]>> methods;
 
@@ -11,7 +11,7 @@ namespace Auroratide.NBehave.Internal {
             this.methods = methods;
         }
 
-        public int TimesCalled(string method, IMatcherList arguments) {
+        public int TimesCalled(string method, Core.MatcherList arguments) {
             if(!methods.ContainsKey(method))
                 return 0;
 

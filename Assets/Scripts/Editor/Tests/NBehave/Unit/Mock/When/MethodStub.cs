@@ -1,5 +1,5 @@
 ﻿namespace Auroratide.NBehave.Unit.Mock {
-    public class MethodStub : Internal.IMethodStub {
+    public class MethodStub : Core.MethodStub {
         
         public static object[] ValidArguments() {
             return new object[] { 2, "hello" };

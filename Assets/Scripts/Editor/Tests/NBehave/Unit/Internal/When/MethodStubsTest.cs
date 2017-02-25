@@ -8,16 +8,16 @@ namespace Auroratide.NBehave.Unit {
 
     public class MethodStubsTest {
 
-        Dictionary<string, IMethodStub> methods;
-        MethodStubs methodStubs;
+        Dictionary<string, Core.MethodStub> methods;
+        Core.StubMemory methodStubs;
 
         [SetUp] public void Init() {
-            methods = new Dictionary<string, IMethodStub>();
-            methodStubs = new MethodStubs(methods);
+            methods = new Dictionary<string, Core.MethodStub>();
+            methodStubs = new StubMemory(methods);
         }
 
         [Test] public void ShouldGetTheMethodStubCorrespondingWithTheMethodName() {
-            IMethodStub methodStub = new Mock.MethodStub();
+            Core.MethodStub methodStub = new Mock.MethodStub();
             methods["Method"] = methodStub;
 
             Assert.That(methodStubs.Get("Method"), Is.EqualTo(methodStub));
