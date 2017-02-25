@@ -7,6 +7,8 @@ namespace Auroratide.NBehave.Internal {
 
         private Dictionary<string, List<object[]>> methods;
 
+        public CallMemory():this(new Dictionary<string, List<object[]>>()) {}
+
         public CallMemory(Dictionary<string, List<object[]>> methods) {
             this.methods = methods;
         }

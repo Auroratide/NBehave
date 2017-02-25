@@ -1,6 +1,6 @@
 ﻿namespace Auroratide.NBehave.Internal {
 
-    public class MethodCall : Core.MethodCall {
+    public class MethodCall : Core.MethodCall, System.IEquatable<MethodCall> {
 
         private Core.MethodStub stub;
         private object[] arguments;
@@ -24,5 +24,17 @@
                 action.Return();
         }
 
+        public bool Equals(MethodCall other) {
+            if(this.stub == other.stub) {
+                if(this.arguments.Length == other.arguments.Length) {
+                    for(int i = 0; i < this.arguments.Length; ++i)
+                        if(!this.arguments[i].Equals(other.arguments[i]))
+                            return false;
+                    return true;
+                }
+                else return false;
+            }
+            else return false;
+        }
     }
 }

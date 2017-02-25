@@ -16,6 +16,10 @@ namespace Auroratide.NBehave {
             return new Internal.MockedType<T>(new Internal.BasicEmitter<T>(GetModuleBuilder()).Emit());
         }
 
+        public static Core.MockProxy Proxy() {
+            return new Internal.MockProxy();
+        }
+
         private static ModuleBuilder GetModuleBuilder() {
             if(moduleBuilder == null) {
                 AssemblyName assemblyName = new AssemblyName();
