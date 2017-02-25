@@ -4,11 +4,11 @@ namespace Auroratide.NBehave.Core {
 
     public class NBehaviour : MonoBehaviour, NBehaveMock {
 
-        private MockProxy nbehave = new Internal.MockProxy();
+        private MockProxy nbehave;
         public MockProxy NBehave {
             get {
                 if(nbehave == null)
-                    nbehave = new Internal.MockProxy();
+                    nbehave = Mock.Proxy();
                 return nbehave;
             }
         }
