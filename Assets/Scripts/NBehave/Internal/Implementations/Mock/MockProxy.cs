@@ -17,7 +17,7 @@ namespace Auroratide.NBehave.Internal {
             get { return callMemory; }
         }
 
-        public Core.StubMemory MethodStubs {
+        public Core.StubMemory StubMemory {
             get { return stubs; }
         }
 

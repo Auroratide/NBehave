@@ -25,13 +25,13 @@ namespace Auroratide.NBehave {
             for(int i = 0; i < arguments.Length; ++i)
                 arguments[i] = Internal.MatcherFactory.create(method.Arguments[i]);
 
-            return mock.NBehave.MethodStubs.Get(methodName).With(arguments);
+            return mock.NBehave.StubMemory.Get(methodName).With(arguments);
         }
 
         private static Core.OngoingStubbing StubMember(MemberExpression member) {
             Core.NBehaveMock mock = (Core.NBehaveMock)Expression.Lambda<Func<object>>(member.Expression).Compile().Invoke();
             string memberName = "get_" + member.Member.Name;
-            return mock.NBehave.MethodStubs.Get(memberName).With();
+            return mock.NBehave.StubMemory.Get(memberName).With();
         }
 
     }
