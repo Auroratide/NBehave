@@ -6,8 +6,10 @@ namespace Auroratide.NBehave.Internal {
 
         private Core.Matcher[] matchers;
 
-        public MatcherList() {
-            this.matchers = new Core.Matcher[0];
+        public MatcherList():this(new Core.Matcher[0]) {}
+
+        public MatcherList(Core.Matcher[] matchers) {
+            this.matchers = matchers;
         }
 
         public MatcherList(object[] objects) {
