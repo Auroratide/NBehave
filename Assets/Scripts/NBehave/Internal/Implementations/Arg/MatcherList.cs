@@ -1,21 +1,20 @@
 ﻿using System;
 
 namespace Auroratide.NBehave.Internal {
-    using Core;
 
     public class MatcherList : Core.MatcherList {
 
-        private Matcher[] matchers;
+        private Core.Matcher[] matchers;
 
         public MatcherList() {
-            this.matchers = new Matcher[0];
+            this.matchers = new Core.Matcher[0];
         }
 
         public MatcherList(object[] objects) {
-            this.matchers = new Matcher[objects.Length];
+            this.matchers = new Core.Matcher[objects.Length];
             for(int i = 0; i < objects.Length; ++i) {
-                if(objects[i] is Matcher)
-                    this.matchers[i] = objects[i] as Matcher;
+                if(objects[i] is Core.Matcher)
+                    this.matchers[i] = objects[i] as Core.Matcher;
                 else
                     this.matchers[i] = new IsMatcher(objects[i]);
             }

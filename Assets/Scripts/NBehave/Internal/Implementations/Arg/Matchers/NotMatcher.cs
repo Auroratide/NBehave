@@ -1,10 +1,9 @@
 ﻿namespace Auroratide.NBehave.Internal {
-    using Core;
 
-    public class NotMatcher : Matcher {
-        private Matcher matcher;
+    public class NotMatcher : Core.Matcher {
+        private Core.Matcher matcher;
 
-        public NotMatcher(Matcher matcher) {
+        public NotMatcher(Core.Matcher matcher) {
             this.matcher = matcher;
         }
 
@@ -12,8 +11,8 @@
             return !matcher.Matches(obj);
         }
 
-        public bool Equals(Matcher other) {
-            return this.matcher.Equals(((NotMatcher)other).matcher);
+        public bool Equals(Core.Matcher other) {
+            return other.GetType() == typeof(NotMatcher) && this.matcher.Equals(((NotMatcher)other).matcher);
         }
 
         override public int GetHashCode() {

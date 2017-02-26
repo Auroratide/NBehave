@@ -1,14 +1,13 @@
 ﻿namespace Auroratide.NBehave.Internal {
-    using Core;
 
-    public class AnyMatcher : Matcher {
+    public class AnyMatcher : Core.Matcher {
         public AnyMatcher() {}
 
         public bool Matches(object obj) {
             return true;
         }
 
-        public bool Equals(Matcher other) {
+        public bool Equals(Core.Matcher other) {
             return other.GetType() == typeof(AnyMatcher);
         }
 
@@ -16,4 +15,5 @@
             return 1819621459;
         }
     }
+
 }

@@ -6,7 +6,7 @@ using NUnit.Framework;
 namespace Auroratide.NBehave.Unit {
 
     public class ArgTest {
-        
+        /*
         [Test] public void ShouldReturnObjectOfIdenticalTypeWhenUsingIs() {
             Assert.That(Arg.Is(1).GetType(), Is.EqualTo(typeof(int)));
             Assert.That(Arg.Is("hello").GetType(), Is.EqualTo(typeof(string)));
@@ -71,6 +71,7 @@ namespace Auroratide.NBehave.Unit {
                 return 1;
             }
         }
+        */
 
     }
 

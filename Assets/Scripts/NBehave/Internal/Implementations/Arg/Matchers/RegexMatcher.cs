@@ -1,9 +1,8 @@
 ﻿using System.Text.RegularExpressions;
 
 namespace Auroratide.NBehave.Internal {
-    using Core;
 
-    public class RegexMatcher : Matcher {
+    public class RegexMatcher : Core.Matcher {
 
         private Regex regex;
 
@@ -15,8 +14,8 @@ namespace Auroratide.NBehave.Internal {
             return regex.IsMatch((string)obj);
         }
 
-        public bool Equals(Matcher other) {
-            return regex.Equals(((RegexMatcher)other).regex);
+        public bool Equals(Core.Matcher other) {
+            return other.GetType() == typeof(RegexMatcher) && regex.Equals(((RegexMatcher)other).regex);
         }
 
         override public int GetHashCode() {

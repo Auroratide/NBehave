@@ -2,9 +2,8 @@
 using System.Linq;
 
 namespace Auroratide.NBehave.Internal {
-    using Core;
 
-    public class ContainsMatcher<T> : Matcher {
+    public class ContainsMatcher<T> : Core.Matcher {
         private T obj;
 
         public ContainsMatcher(T obj) {
@@ -15,8 +14,8 @@ namespace Auroratide.NBehave.Internal {
             return ((IEnumerable<T>)collection).Contains(obj);
         }
 
-        public bool Equals(Matcher other) {
-            return this.obj.Equals(((ContainsMatcher<T>)other).obj);
+        public bool Equals(Core.Matcher other) {
+            return other.GetType() == typeof(ContainsMatcher<T>) && this.obj.Equals(((ContainsMatcher<T>)other).obj);
         }
 
         override public int GetHashCode() {

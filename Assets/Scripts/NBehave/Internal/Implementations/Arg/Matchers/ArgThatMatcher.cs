@@ -1,9 +1,8 @@
 ﻿using System;
 
 namespace Auroratide.NBehave.Internal {
-    using Core;
 
-    public class ArgThatMatcher<T> : Matcher {
+    public class ArgThatMatcher<T> : Core.Matcher {
 
         private Predicate<T> predicate;
 
@@ -15,8 +14,8 @@ namespace Auroratide.NBehave.Internal {
             return predicate((T)obj);
         }
 
-        public bool Equals(Matcher other) {
-            return this.predicate == ((ArgThatMatcher<T>)other).predicate;
+        public bool Equals(Core.Matcher other) {
+            return other.GetType() == typeof(ArgThatMatcher<T>) && this.predicate == ((ArgThatMatcher<T>)other).predicate;
         }
 
         override public int GetHashCode() {

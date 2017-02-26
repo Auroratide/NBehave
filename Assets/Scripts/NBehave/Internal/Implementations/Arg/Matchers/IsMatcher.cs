@@ -1,7 +1,6 @@
 ﻿namespace Auroratide.NBehave.Internal {
-    using Core;
 
-    public class IsMatcher : Matcher {
+    public class IsMatcher : Core.Matcher {
         private object obj;
 
         public IsMatcher(object obj) {
@@ -12,8 +11,8 @@
             return this.obj.Equals(obj);
         }
 
-        public bool Equals(Matcher other) {
-            return this.obj.Equals(((IsMatcher)other).obj);
+        public bool Equals(Core.Matcher other) {
+            return other.GetType() == typeof(IsMatcher) && this.obj.Equals(((IsMatcher)other).obj);
         }
 
         override public int GetHashCode() {
