@@ -1,11 +1,11 @@
 ﻿using UnityEngine;
 
-namespace Auroratide.NBehave.Core {
+namespace Auroratide.NBehave.Unity {
 
-    public class NBehaviour : MonoBehaviour, NBehaveMock {
+    public class NBehaviour : MonoBehaviour, Core.NBehaveMock {
 
-        private MockProxy nbehave;
-        public MockProxy NBehave {
+        private Core.MockProxy nbehave;
+        public Core.MockProxy NBehave {
             get {
                 if(nbehave == null)
                     nbehave = Mock.Proxy();

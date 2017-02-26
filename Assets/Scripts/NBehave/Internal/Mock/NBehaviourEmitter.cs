@@ -3,17 +3,16 @@ using System.Reflection;
 using System.Reflection.Emit;
 
 namespace Auroratide.NBehave.Internal {
-    using Core;
 
-    public class NBehaviourEmitter<T> : MockEmitter<T> where T : class {
+    public class NBehaviourEmitter<T> : Core.MockEmitter<T> where T : class {
 
         public NBehaviourEmitter(ModuleBuilder moduleBuilder):base(moduleBuilder) {}
 
         override public Type BuildType() {
-            TypeBuilder typeBuilder = moduleBuilder.DefineType(type.Name, TypeAttributes.Public | TypeAttributes.Class | TypeAttributes.AutoClass, typeof(NBehaviour));
+            TypeBuilder typeBuilder = moduleBuilder.DefineType(type.Name, TypeAttributes.Public | TypeAttributes.Class | TypeAttributes.AutoClass, typeof(Unity.NBehaviour));
             typeBuilder.AddInterfaceImplementation(type);
 
-            PropertyInfo nbehaveProperty = typeof(NBehaviour).GetProperty("NBehave");
+            PropertyInfo nbehaveProperty = typeof(Unity.NBehaviour).GetProperty("NBehave");
             BuildConstructor(typeBuilder);
             ImplementMethods(typeBuilder, nbehaveProperty);
 
