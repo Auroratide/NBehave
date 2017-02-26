@@ -6,7 +6,7 @@ using NUnit.Framework;
 namespace Auroratide.NBehave.Unit.When {
     using Internal;
 
-    public class MethodStubsTest {
+    public class StubMemoryTest {
 
         Dictionary<string, Core.MethodStub> methods;
         Core.StubMemory methodStubs;

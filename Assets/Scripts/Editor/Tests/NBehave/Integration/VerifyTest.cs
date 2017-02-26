@@ -5,7 +5,7 @@ namespace Auroratide.NBehave.Integration {
     using Core;
     using Exceptions;
 
-    public class VerifierTest {
+    public class VerifyTest {
 
         Mock mock;
 

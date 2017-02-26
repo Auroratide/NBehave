@@ -8,7 +8,7 @@ using System.Text.RegularExpressions;
 namespace Auroratide.NBehave.Integration {
     using Core;
 
-    public class MatcherTest {
+    public class ArgTest {
         private const int DEFAULT_INT = 0;
         
         Mock mock;
