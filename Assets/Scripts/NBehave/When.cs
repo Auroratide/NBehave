@@ -23,7 +23,7 @@ namespace Auroratide.NBehave {
 
             object[] arguments = new object[method.Arguments.Count];
             for(int i = 0; i < arguments.Length; ++i)
-                arguments[i] = Internal.MatcherFactory.create(method.Arguments[i]);
+                arguments[i] = Internal.MatcherFactory.Create(method.Arguments[i]);
 
             return mock.NBehave.StubMemory.Get(methodName).With(arguments);
         }

@@ -10,7 +10,7 @@ namespace Auroratide.NBehave {
             string methodName = new Internal.MethodNamer(method.Method).Name();
             object[] arguments = new object[method.Arguments.Count];
             for(int i = 0; i < arguments.Length; ++i)
-                arguments[i] = Internal.MatcherFactory.create(method.Arguments[i]);
+                arguments[i] = Internal.MatcherFactory.Create(method.Arguments[i]);
 
             return new Internal.Verifier(mock, methodName, new Internal.MatcherList(arguments));
         }

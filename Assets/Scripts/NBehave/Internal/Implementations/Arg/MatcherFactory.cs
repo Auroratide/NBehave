@@ -9,7 +9,7 @@ namespace Auroratide.NBehave.Internal {
     public static class MatcherFactory {
 
     //  Yes, it's magic.
-        public static Matcher create(Expression expression) {
+        public static Matcher Create(Expression expression) {
             string expStr = expression.ToString();
             if(new Regex("^Any\\(").IsMatch(expStr))
                 return (Matcher)typeof(AnyOfMatcher<>)
@@ -31,7 +31,7 @@ namespace Auroratide.NBehave.Internal {
                     .GetConstructor(new Type[] { expression.Type.GetGenericArguments()[0] })
                     .Invoke(new object[] { Expression.Lambda((expression as MethodCallExpression).Arguments[0]).Compile().DynamicInvoke() });
             else if(new Regex("^Not\\(").IsMatch(expStr))
-                return new NotMatcher(create((expression as MethodCallExpression).Arguments[0]));
+                return new NotMatcher(Create((expression as MethodCallExpression).Arguments[0]));
             else if(new Regex("^Matches\\(").IsMatch(expStr))
                 return Expression.Lambda<Func<Matcher>>((expression as MethodCallExpression).Arguments[0]).Compile().Invoke();
             else
