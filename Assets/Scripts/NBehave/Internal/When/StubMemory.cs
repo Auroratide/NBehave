@@ -13,7 +13,7 @@ namespace Auroratide.NBehave.Internal {
 
         public Core.MethodStub Get(string method) {
             if(!methods.ContainsKey(method))
-                methods[method] = new MethodStub(new Dictionary<Core.MatcherList, List<Core.StubAction>>());
+                methods[method] = new MethodStub();
             return methods[method];
         }
     }

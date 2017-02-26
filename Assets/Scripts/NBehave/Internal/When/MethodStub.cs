@@ -6,6 +6,8 @@ namespace Auroratide.NBehave.Internal {
 
         private Dictionary<Core.MatcherList, List<Core.StubAction>> returns;
 
+        public MethodStub():this(new Dictionary<Core.MatcherList, List<Core.StubAction>>()) {}
+
         public MethodStub(Dictionary<Core.MatcherList, List<Core.StubAction>> returns) {
             this.returns = returns;
             this.returns[new MatcherList()] = new List<Core.StubAction>();
@@ -15,7 +17,7 @@ namespace Auroratide.NBehave.Internal {
             Core.MatcherList matchers = new MatcherList(arguments);
             returns[matchers] = new List<Core.StubAction>();
 
-            return new OngoingStubbing(new StubbingAction(arguments, returns[matchers]), returns[matchers]);
+            return new OngoingStubbing(arguments, returns[matchers]);
         }
             
         public Core.StubAction NextReturnAction(params object[] arguments) {
