@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEditor;
 using NUnit.Framework;
 
-namespace Auroratide.NBehave.Unit {
+namespace Auroratide.NBehave.Unit.Verify {
     using Internal;
 
     public class VerifierTest {

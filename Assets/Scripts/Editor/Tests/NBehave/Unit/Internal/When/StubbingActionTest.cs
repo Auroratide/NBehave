@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEditor;
 using NUnit.Framework;
 
-namespace Auroratide.NBehave.Unit {
+namespace Auroratide.NBehave.Unit.When {
     using Internal;
 
     public class StubbingActionTest {
