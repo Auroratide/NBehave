@@ -44,9 +44,9 @@ namespace Auroratide.NBehave.Unit.When {
         }
 
         [Test] public void ShouldReturnAnOngoingStubbing() {
-            Assert.That(stubbingAction.Return(new object()), Is.Not.Null);
-            Assert.That(stubbingAction.Throw(new System.Exception()), Is.Not.Null);
-            Assert.That(stubbingAction.Execute(arg => new object()), Is.Not.Null);
+            Assert.That(stubbingAction.Return(new object()), Is.EqualTo(ongoingStubbing));
+            Assert.That(stubbingAction.Throw(new System.Exception()), Is.EqualTo(ongoingStubbing));
+            Assert.That(stubbingAction.Execute(arg => new object()), Is.EqualTo(ongoingStubbing));
         }
 
     }
