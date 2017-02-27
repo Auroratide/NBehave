@@ -1,13 +1,12 @@
 ﻿using System.Collections.Generic;
 
 namespace Auroratide.NBehave.Internal {
-    using Core;
 
-    public class Always : StubAction {
-        private StubAction previous;
-        private List<StubAction> returns;
+    public class Always : Core.StubAction {
+        private Core.StubAction previous;
+        private List<Core.StubAction> returns;
         
-        public Always(StubAction previous, List<StubAction> returns) {
+        public Always(Core.StubAction previous, List<Core.StubAction> returns) {
             this.previous = previous;
             this.returns = returns;
         }
