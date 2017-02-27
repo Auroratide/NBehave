@@ -24,7 +24,9 @@ namespace Auroratide.NBehave.Unit.When {
         }
 
         [Test] public void ShouldReturnANewMethodStubWhenOneIsNotInTheList() {
-            Assert.That(methodStubs.Get("NotAMethod"), Is.Not.Null);
+            Core.MethodStub actual = methodStubs.Get("NotAMethod");
+            Assert.That(actual, Is.Not.Null);
+            Assert.That(methods["NotAMethod"], Is.EqualTo(actual));
         }
 
     }
