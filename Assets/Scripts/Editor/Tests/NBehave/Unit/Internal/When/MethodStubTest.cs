@@ -25,6 +25,16 @@ namespace Auroratide.NBehave.Unit.When {
             Assert.That(returns[matchers].Count, Is.EqualTo(0));
         }
 
+        [Test] public void ShouldReturnOngoingStubbingWithCorrectArgumentsAndReturnsList() {
+            object[] arguments = new object[] { 2, "hello" };
+            List<Core.StubAction> returnList = new List<Core.StubAction>();
+            OngoingStubbing expected = new OngoingStubbing(arguments, returnList);
+
+            Core.OngoingStubbing actual = methodStub.With(arguments);
+
+            Assert.That((OngoingStubbing)actual, Is.EqualTo(expected));
+        }
+
         [Test] public void ShouldReturnNextStubActionForGivenArguments() {
             object[] arguments = new object[] { 2, "hello" };
             MatcherList matchers = new MatcherList(arguments);
@@ -46,7 +56,7 @@ namespace Auroratide.NBehave.Unit.When {
 
             Core.StubAction actualAction = methodStub.NextReturnAction(2, "hello");
 
-            Assert.IsFalse(returns[matchers].Contains(action));
+            Assert.That(returns[matchers].Contains(action), Is.False);
         }
 
         [Test] public void ShouldReturnNullIfNoActionExistsForArguments() {

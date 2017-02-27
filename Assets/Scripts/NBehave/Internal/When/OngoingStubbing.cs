@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Linq;
+using System.Collections.Generic;
 
 namespace Auroratide.NBehave.Internal {
 
@@ -21,7 +22,7 @@ namespace Auroratide.NBehave.Internal {
         }
 
         public bool Equals(OngoingStubbing other) {
-            return this.arguments == other.arguments && this.returns == other.returns;
+            return this.arguments.SequenceEqual(other.arguments) && this.returns.SequenceEqual(other.returns);
         }
 
     }
