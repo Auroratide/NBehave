@@ -1,11 +1,10 @@
 ﻿namespace Auroratide.NBehave.Internal {
-    using Core;
 
-    public class Executes : StubAction {
+    public class Executes : Core.StubAction {
         private object[] arguments;
-        private ExecutesDelegate function;
+        private Core.ExecutesDelegate function;
 
-        public Executes(ExecutesDelegate function, object[] arguments) {
+        public Executes(Core.ExecutesDelegate function, object[] arguments) {
             this.function = function;
             this.arguments = arguments;
         }
