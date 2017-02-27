@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Auroratide.NBehave.Internal {
 
-    public class StubbingAction : Core.StubbingAction {
+    public class StubbingAction : Core.StubbingAction, IEquatable<StubbingAction> {
         
         private Core.OngoingStubbing ongoingStubbing;
         private object[] arguments;
@@ -28,6 +28,12 @@ namespace Auroratide.NBehave.Internal {
         public Core.OngoingStubbing Execute(Core.ExecutesDelegate function) {
             returns.Add(new Executes(function, arguments));
             return ongoingStubbing;
+        }
+
+        public bool Equals(StubbingAction other) {
+            return this.ongoingStubbing == other.ongoingStubbing &&
+                this.arguments == other.arguments &&
+                this.returns == other.returns;
         }
 
     }

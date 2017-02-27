@@ -18,9 +18,10 @@ namespace Auroratide.NBehave.Unit.When {
 
             ongoingStubbing = new OngoingStubbing(arguments, returns);
         }
-        /*
+
         [Test] public void ShouldReturnTheStubbingAction() {
-            Assert.That(ongoingStubbing.Then, Is.EqualTo(stubbingAction));
+            StubbingAction expected = new StubbingAction(ongoingStubbing, arguments, returns);
+            Assert.That((StubbingAction)ongoingStubbing.Then, Is.EqualTo(expected));
         }
 
         [Test] public void ShouldAddAnAlwaysActionToTheEndOfTheReturnsList() {
@@ -31,7 +32,6 @@ namespace Auroratide.NBehave.Unit.When {
             Assert.That(returns.Count, Is.EqualTo(2));
             Assert.That(returns[1].GetType(), Is.EqualTo(typeof(Always)));
         }
-        */
 
     }
 
