@@ -1,7 +1,6 @@
 ﻿namespace Auroratide.NBehave.Internal {
-    using Core;
 
-    public class AtLeast : Times, System.IEquatable<AtLeast> {
+    public class AtLeast : Core.Times, System.IEquatable<AtLeast> {
         private int expected;
 
         public AtLeast(int expected) {

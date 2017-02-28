@@ -1,7 +1,6 @@
 ﻿namespace Auroratide.NBehave.Internal {
-    using Core;
 
-    public class Exactly : Times, System.IEquatable<Exactly> {
+    public class Exactly : Core.Times, System.IEquatable<Exactly> {
         private int expected;
 
         public Exactly(int expected) {
