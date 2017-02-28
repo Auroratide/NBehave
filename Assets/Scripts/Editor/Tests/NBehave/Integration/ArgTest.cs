@@ -6,7 +6,6 @@ using NUnit.Framework;
 using System.Text.RegularExpressions;
 
 namespace Auroratide.NBehave.Integration {
-    using Core;
 
     public class ArgTest {
         private const int DEFAULT_INT = 0;
@@ -44,7 +43,6 @@ namespace Auroratide.NBehave.Integration {
 
             Assert.That(mock.ListArg(ints), Is.EqualTo(1));
         }
-
 
         [Test] public void ShouldMatchWhenArgumentContainsDerivativeValue() {
             var baseObj = new Base();
@@ -186,9 +184,9 @@ namespace Auroratide.NBehave.Integration {
             Assert.That(result, Is.EqualTo(DEFAULT_INT));
         }
 
-        private class Mock : NBehaveMock {
-            private MockProxy nbehave;
-            public MockProxy NBehave {
+        private class Mock : Core.NBehaveMock {
+            private Core.MockProxy nbehave;
+            public Core.MockProxy NBehave {
                 get { return nbehave; }
             }
 

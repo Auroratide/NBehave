@@ -2,7 +2,6 @@
 using NUnit.Framework;
 
 namespace Auroratide.NBehave.Integration {
-    using Core;
     using Exceptions;
 
     public class VerifyTest {
@@ -91,9 +90,9 @@ namespace Auroratide.NBehave.Integration {
             Verify.That(() => mock.Overloaded(1, 2)).IsCalled();
         }
 
-        private class Mock : NBehaveMock {
-            private MockProxy nbehave;
-            public MockProxy NBehave {
+        private class Mock : Core.NBehaveMock {
+            private Core.MockProxy nbehave;
+            public Core.MockProxy NBehave {
                 get { return nbehave; }
             }
 

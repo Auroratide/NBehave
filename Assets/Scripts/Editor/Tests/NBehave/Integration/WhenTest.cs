@@ -2,7 +2,6 @@
 using NUnit.Framework;
 
 namespace Auroratide.NBehave.Integration {
-    using Core;
 
     public class WhenTest {
         private const int DEFAULT_INT = 0;
@@ -92,7 +91,7 @@ namespace Auroratide.NBehave.Integration {
             Assert.That(mock.StringArg("hello"), Is.EqualTo(1));
         }
 
-        [Test] public void ShouldAlwaysValueWhenStubbingWithAlways() {
+        [Test] public void ShouldAlwaysReturnValueWhenStubbingWithAlways() {
             When.Called(() => mock.NoArgs())
                 .Then.Return(1)
                 .Then.Return(2)
@@ -130,9 +129,9 @@ namespace Auroratide.NBehave.Integration {
             Assert.That(mock.NoArgs(), Is.EqualTo(DEFAULT_INT));
         }
 
-        private class Mock : NBehaveMock {
-            private MockProxy nbehave;
-            public MockProxy NBehave {
+        private class Mock : Core.NBehaveMock {
+            private Core.MockProxy nbehave;
+            public Core.MockProxy NBehave {
                 get { return nbehave; }
             }
 
