@@ -12,9 +12,25 @@ namespace Auroratide.NBehave.Integration {
             mock = new Mock();
         }
 
+        [Test] public void ShouldVerifyMethodWasNotCalled() {
+            Verify.That(() => mock.Method()).IsNotCalled();
+        }
+
+        [ExpectedException (typeof(VerificationException))]
+        [Test] public void ShouldThrowVerificationExceptionWhenMethodWasCalledMoreThanZeroTimes() {
+            mock.Method();
+
+            Verify.That(() => mock.Method()).IsNotCalled();
+        }
+
         [Test] public void ShouldVerifyMethodWasCalledExactlyOnce() {
             mock.Method();
 
+            Verify.That(() => mock.Method()).IsCalled().Once();
+        }
+
+        [ExpectedException (typeof(VerificationException))]
+        [Test] public void ShouldThrowVerificationExceptionWhenMethodWasCalledLessThanOnce() {
             Verify.That(() => mock.Method()).IsCalled().Once();
         }
 
@@ -73,13 +89,6 @@ namespace Auroratide.NBehave.Integration {
             mock.Method();
 
             Verify.That(() => mock.Method()).IsCalled().Thrice();
-        }
-
-        [ExpectedException (typeof(VerificationException))]
-        [Test] public void ShouldThrowVerificationExceptionWhenMethodWasCalledDepiteNeverWantingItCalled() {
-            mock.Method();
-
-            Verify.That(() => mock.Method()).IsNotCalled();
         }
 
         [Test] public void ShouldVerifyMethodWasCalledAtLeastSomeNumberOfTimes() {
@@ -148,6 +157,25 @@ namespace Auroratide.NBehave.Integration {
             Verify.That(() => mock.Method()).IsCalled().Exactly(4);
         }
 
+        [Test] public void ShouldVerifyWithCustomTimesSpecification() {
+            mock.Method();
+
+            Verify.That(() => mock.Method()).HasInteractions(new OddNumberOfTimes());
+
+            mock.Method();
+            mock.Method();
+
+            Verify.That(() => mock.Method()).HasInteractions(new OddNumberOfTimes());
+        }
+
+        [ExpectedException (typeof(VerificationException))]
+        [Test] public void ShouldThrowVerificationExceptionWhenMethodDoesNotSatisfyCustomNumberOfTimes() {
+            mock.Method();
+            mock.Method();
+
+            Verify.That(() => mock.Method()).HasInteractions(new OddNumberOfTimes());
+        }
+
         private class Mock : Core.NBehaveMock {
             private Core.MockProxy nbehave;
             public Core.MockProxy NBehave {
@@ -161,6 +189,18 @@ namespace Auroratide.NBehave.Integration {
             public void Method() {
                 NBehave.Call();
             }
+        }
+
+        private class OddNumberOfTimes : Core.Times {
+            
+            public string ToString() {
+                return "odd number of times";
+            }
+
+            public bool Matches(int times) {
+                return times % 2 == 1;
+            }
+
         }
 
     }
