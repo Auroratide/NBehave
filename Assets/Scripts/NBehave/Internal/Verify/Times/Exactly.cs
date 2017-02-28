@@ -1,7 +1,7 @@
 ﻿namespace Auroratide.NBehave.Internal {
     using Core;
 
-    public class Exactly : Times {
+    public class Exactly : Times, System.IEquatable<Exactly> {
         private int expected;
 
         public Exactly(int expected) {
@@ -15,5 +15,10 @@
         public bool Matches(int times) {
             return times == expected;
         }
+
+        public bool Equals(Exactly other) {
+            return this.expected == other.expected;
+        }
+
     }
 }
