@@ -28,6 +28,11 @@ namespace Auroratide.NBehave.Internal {
             return ongoingStubbing;
         }
 
+        public Core.OngoingStubbing Do(Core.StubAction action) {
+            returns.Add(action);
+            return ongoingStubbing;
+        }
+
         public bool Equals(StubbingAction other) {
             return this.ongoingStubbing == other.ongoingStubbing &&
                 this.returns == other.returns;

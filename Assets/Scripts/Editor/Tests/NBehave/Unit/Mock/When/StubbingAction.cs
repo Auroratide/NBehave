@@ -19,16 +19,23 @@
             return Returns.Execute.Dequeue();
         }
 
+        public Core.OngoingStubbing Do(Core.StubAction StubAction) {
+            ++TimesCalled.Do;
+            return Returns.Do.Dequeue();
+        }
+
         public class ReturnList {
             public Queue<Core.OngoingStubbing> Return = new Queue<Core.OngoingStubbing>();
             public Queue<Core.OngoingStubbing> Throw = new Queue<Core.OngoingStubbing>();
             public Queue<Core.OngoingStubbing> Execute = new Queue<Core.OngoingStubbing>();
+            public Queue<Core.OngoingStubbing> Do = new Queue<Core.OngoingStubbing>();
         }
 
         public class TimesCalledTracker {
             public int Return = 0;
             public int Throw = 0;
             public int Execute = 0;
+            public int Do = 0;
         }
     }
 }

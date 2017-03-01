@@ -1,11 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using NUnit.Framework;
 
 namespace Auroratide.NBehave.Integration {
 
     public class StubActionTest {
-        private const int DEFAULT_INT = 0;
-        private const string DEFAULT_STRING = "Default String";
 
         Mock mock;
 
@@ -89,6 +88,12 @@ namespace Auroratide.NBehave.Integration {
             Assert.That(mock.Method(), Is.EqualTo(2));
         }
 
+        [Test] public void ShouldDoCustomReturnAction() {
+            When.Called(() => mock.Method()).Then.Do(new CustomAction());
+
+            Assert.That(mock.Method(), Is.EqualTo(999));
+        }
+
         private class Mock : Core.NBehaveMock {
             private Core.MockProxy nbehave;
             public Core.MockProxy NBehave {
@@ -110,6 +115,12 @@ namespace Auroratide.NBehave.Integration {
         }
 
         private class SomeException : Exception {}
+
+        private class CustomAction : Core.StubAction {
+            public object Return(object[] args) {
+                return 999;
+            }
+        }
 
     }
 

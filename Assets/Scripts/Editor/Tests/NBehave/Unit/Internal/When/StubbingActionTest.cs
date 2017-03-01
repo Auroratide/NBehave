@@ -45,6 +45,15 @@ namespace Auroratide.NBehave.Unit.When {
             Assert.That(stubbingAction.Return(new object()), Is.EqualTo(ongoingStubbing));
             Assert.That(stubbingAction.Throw(new System.Exception()), Is.EqualTo(ongoingStubbing));
             Assert.That(stubbingAction.Execute(arg => new object()), Is.EqualTo(ongoingStubbing));
+            Assert.That(stubbingAction.Do(new Mock.StubAction()), Is.EqualTo(ongoingStubbing));
+        }
+
+        [Test] public void ShouldAddCustomStubActionToReturnsList() {
+            Core.StubAction action = new Mock.StubAction();
+            stubbingAction.Do(action);
+
+            Assert.That(returns.Count, Is.EqualTo(2));
+            Assert.That(returns[1], Is.EqualTo(action));
         }
 
     }
