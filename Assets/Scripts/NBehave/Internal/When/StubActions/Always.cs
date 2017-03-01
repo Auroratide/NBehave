@@ -11,9 +11,9 @@ namespace Auroratide.NBehave.Internal {
             this.returns = returns;
         }
 
-        public object Return() {
+        public object Return(object[] args) {
             returns.Add(this);
-            return previous.Return();
+            return previous.Return(args);
         }
     }
 }

@@ -15,13 +15,13 @@
             if (action == null)
                 return default(T);
             else 
-                return (T)action.Return();
+                return (T)action.Return(arguments);
         }
 
         public void AndExecute() {
             Core.StubAction action = stub.NextReturnAction(arguments);
             if (action != null)
-                action.Return();
+                action.Return(arguments);
         }
 
         public bool Equals(MethodCall other) {

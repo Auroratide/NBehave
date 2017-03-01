@@ -8,7 +8,7 @@
             this.value = value;
         }
 
-        public object Return() {
+        public object Return(object[] args) {
             return value;
         }
     }

@@ -38,13 +38,11 @@ namespace Auroratide.NBehave.Integration {
             Assert.That(wasCalled, Is.True);
         }
 
-        [Ignore("Broken; calling the stub-time arguments rather than the call-time arguments")]
         [Test] public void ShouldExecuteDelegateWithArgs() {
             bool wasCalled = false;
 
             When.Called(() => mock.Method(2, 3)).Then.Execute(args => {
                 wasCalled = true;
-                UnityEngine.Debug.Log(args[0]);
                 return (int)(args[0]) + (int)(args[1]);
             });
 

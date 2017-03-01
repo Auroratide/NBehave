@@ -8,7 +8,7 @@
             this.exception = exception;
         }
 
-        public object Return() {
+        public object Return(object[] args) {
             throw exception;
         }
     }

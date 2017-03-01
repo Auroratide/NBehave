@@ -10,12 +10,12 @@ namespace Auroratide.NBehave.Unit.When {
 
         [ExpectedException(typeof(System.Exception))]
         [Test] public void ShouldThrowGivenException() {
-            new Throws(new System.Exception()).Return();
+            new Throws(new System.Exception()).Return(new object[0]);
         }
 
         [ExpectedException(typeof(CustomException))]
         [Test] public void ShouldThrowCustomException() {
-            new Throws(new CustomException()).Return();
+            new Throws(new CustomException()).Return(new object[0]);
         }
 
         private class CustomException : System.Exception {}

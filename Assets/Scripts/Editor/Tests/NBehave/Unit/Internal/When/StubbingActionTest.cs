@@ -9,15 +9,13 @@ namespace Auroratide.NBehave.Unit.When {
     public class StubbingActionTest {
 
         Mock.OngoingStubbing ongoingStubbing;
-        object[] arguments;
         List<Core.StubAction> returns;
         StubbingAction stubbingAction;
 
         [SetUp] public void Init() {
             ongoingStubbing = new Mock.OngoingStubbing();
-            arguments = new object[] { 2, "hello" };
             returns = new List<Core.StubAction>();
-            stubbingAction = new StubbingAction(ongoingStubbing, arguments, returns);
+            stubbingAction = new StubbingAction(ongoingStubbing, returns);
 
             returns.Add(new Mock.StubAction());
         }

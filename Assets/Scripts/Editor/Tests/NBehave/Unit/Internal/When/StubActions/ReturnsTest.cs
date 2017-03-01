@@ -9,8 +9,9 @@ namespace Auroratide.NBehave.Unit.When {
     public class ReturnsTest {
 
         [Test] public void ShouldReturnSameValue() {
-            Assert.That(new Returns(2).Return(), Is.EqualTo(2));
-            Assert.That(new Returns("hello").Return(), Is.EqualTo("hello"));
+            object[] args = new object[0];
+            Assert.That(new Returns(2).Return(args), Is.EqualTo(2));
+            Assert.That(new Returns("hello").Return(args), Is.EqualTo("hello"));
         }
 
     }

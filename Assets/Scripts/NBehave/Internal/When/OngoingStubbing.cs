@@ -14,7 +14,7 @@ namespace Auroratide.NBehave.Internal {
         }
 
         public Core.StubbingAction Then {
-            get { return new StubbingAction(this, arguments, returns); }
+            get { return new StubbingAction(this, returns); }
         }
 
         public void Always() {

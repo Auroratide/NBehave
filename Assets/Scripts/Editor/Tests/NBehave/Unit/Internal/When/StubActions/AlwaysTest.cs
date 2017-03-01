@@ -8,11 +8,15 @@ namespace Auroratide.NBehave.Unit.When {
 
     public class AlwaysTest {
 
+        object[] arguments;
+
         Mock.StubAction stubAction;
         List<Core.StubAction> stubActions;
         Always always;
 
         [SetUp] public void Init() {
+            arguments = new object[0];
+
             stubAction = new Mock.StubAction();
             stubActions = new List<Core.StubAction>();
             always = new Always(stubAction, stubActions);
@@ -21,7 +25,7 @@ namespace Auroratide.NBehave.Unit.When {
         }
 
         [Test] public void ShouldReaddItselfToTheReturnsList() {
-            always.Return();
+            always.Return(arguments);
 
             Assert.That(stubActions.Count, Is.EqualTo(2));
             Assert.That(stubActions[0], Is.EqualTo(always));
@@ -29,9 +33,9 @@ namespace Auroratide.NBehave.Unit.When {
         }
 
         [Test] public void ShouldReturnResultOfPreviousReturnStatement() {
-            stubAction.Returns.Return.Enqueue("hey there");
+            stubAction.Returns.Return.Set(arguments, "hey there");
 
-            Assert.That(always.Return(), Is.EqualTo("hey there"));
+            Assert.That(always.Return(arguments), Is.EqualTo("hey there"));
         }
 
     }

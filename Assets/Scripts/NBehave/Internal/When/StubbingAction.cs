@@ -6,12 +6,10 @@ namespace Auroratide.NBehave.Internal {
     public class StubbingAction : Core.StubbingAction, IEquatable<StubbingAction> {
         
         private Core.OngoingStubbing ongoingStubbing;
-        private object[] arguments;
         private List<Core.StubAction> returns;
 
-        public StubbingAction(Core.OngoingStubbing ongoingStubbing, object[] arguments, List<Core.StubAction> returns) {
+        public StubbingAction(Core.OngoingStubbing ongoingStubbing, List<Core.StubAction> returns) {
             this.ongoingStubbing = ongoingStubbing;
-            this.arguments = arguments;
             this.returns = returns;
         }
 
@@ -26,13 +24,12 @@ namespace Auroratide.NBehave.Internal {
         }
 
         public Core.OngoingStubbing Execute(Core.ExecutesDelegate function) {
-            returns.Add(new Executes(function, arguments));
+            returns.Add(new Executes(function));
             return ongoingStubbing;
         }
 
         public bool Equals(StubbingAction other) {
             return this.ongoingStubbing == other.ongoingStubbing &&
-                this.arguments == other.arguments &&
                 this.returns == other.returns;
         }
 

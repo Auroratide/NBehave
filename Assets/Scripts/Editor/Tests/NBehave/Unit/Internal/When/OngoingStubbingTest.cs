@@ -20,7 +20,7 @@ namespace Auroratide.NBehave.Unit.When {
         }
 
         [Test] public void ShouldReturnTheStubbingAction() {
-            StubbingAction expected = new StubbingAction(ongoingStubbing, arguments, returns);
+            StubbingAction expected = new StubbingAction(ongoingStubbing, returns);
             Assert.That((StubbingAction)ongoingStubbing.Then, Is.EqualTo(expected));
         }
 

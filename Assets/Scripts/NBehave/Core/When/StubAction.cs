@@ -1,5 +1,5 @@
 ﻿namespace Auroratide.NBehave.Core {
     public interface StubAction {
-        object Return();
+        object Return(object[] arguments);
     }
 }

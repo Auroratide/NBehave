@@ -8,17 +8,19 @@ namespace Auroratide.NBehave.Unit.When {
 
     public class MethodCallTest {
 
+        object[] arguments;
         MethodCall methodCall;
         Mock.MethodStub methodStub;
 
         [SetUp] public void Init() {
+            arguments = Mock.MethodStub.ValidArguments();
             methodStub = new Mock.MethodStub();
-            methodCall = new MethodCall(methodStub, Mock.MethodStub.ValidArguments());
+            methodCall = new MethodCall(methodStub, arguments);
         }
 
         [Test] public void ShouldReturnTheResultsOfTheNextReturnAction() {
             Mock.StubAction stubAction = new Mock.StubAction();
-            stubAction.Returns.Return.Enqueue(2);
+            stubAction.Returns.Return.Set(arguments, 2);
             methodStub.Returns.NextReturnAction.Enqueue(stubAction);
 
             Assert.That(methodCall.AndReturn<int>(), Is.EqualTo(2));
