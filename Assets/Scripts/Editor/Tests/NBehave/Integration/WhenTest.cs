@@ -4,8 +4,6 @@ using NUnit.Framework;
 namespace Auroratide.NBehave.Integration {
 
     public class WhenTest {
-        private const int DEFAULT_INT = 0;
-        private const string DEFAULT_STRING = "Default String";
         
         Mock mock;
 
