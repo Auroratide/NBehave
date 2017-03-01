@@ -206,6 +206,11 @@ namespace Auroratide.NBehave.Integration {
             Verify.That(() => mock.ContinuousArgs(3, 5)).IsCalled();
         }
 
+        [Ignore("Not yet implemented")]
+        [Test] public void ShouldThrowVerificationExceptionWhenAttemptingToVerifyNonMockedClass() {
+            
+        }
+
         private class Mock : Core.NBehaveMock {
             private Core.MockProxy nbehave;
             public Core.MockProxy NBehave {

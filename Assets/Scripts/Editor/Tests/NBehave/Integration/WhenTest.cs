@@ -21,12 +21,47 @@ namespace Auroratide.NBehave.Integration {
             Assert.That(mock.Property, Is.EqualTo(2));
         }
 
-        [Test] public void ShouldStubNoArgsMethod() {
-            When.Called(() => mock.NoArgs()).Then.Return(1);
-            Assert.That(mock.NoArgs(), Is.EqualTo(1));
+        [Test] public void ShouldStubPrimitiveReturn() {
+            When.Called(() => mock.PrimitiveReturn()).Then.Return(1);
+            Assert.That(mock.PrimitiveReturn(), Is.EqualTo(1));
 
-            When.Called(() => mock.NoArgs()).Then.Return(2);
-            Assert.That(mock.NoArgs(), Is.EqualTo(2));
+            When.Called(() => mock.PrimitiveReturn()).Then.Return(2);
+            Assert.That(mock.PrimitiveReturn(), Is.EqualTo(2));
+        }
+
+        [Test] public void ShouldStubStringReturn() {
+            When.Called(() => mock.StringReturn()).Then.Return("hello");
+            Assert.That(mock.StringReturn(), Is.EqualTo("hello"));
+
+            When.Called(() => mock.StringReturn()).Then.Return("world");
+            Assert.That(mock.StringReturn(), Is.EqualTo("world"));
+        }
+
+        [Test] public void ShouldStubClassReturn() {
+            Class c1 = new Class();
+            When.Called(() => mock.ClassReturn()).Then.Return(c1);
+            Assert.That(mock.ClassReturn(), Is.EqualTo(c1));
+
+            Class c2 = new Class();
+            When.Called(() => mock.ClassReturn()).Then.Return(c2);
+            Assert.That(mock.ClassReturn(), Is.EqualTo(c2));
+        }
+
+        [Test] public void ShouldStubDerivedReturn() {
+            Derived derived = new Derived();
+            When.Called(() => mock.ClassReturn()).Then.Return(derived);
+
+            Assert.That(mock.ClassReturn(), Is.EqualTo(derived));
+        }
+
+        [Test] public void ShouldStubStructReturn() {
+            Struct s1 = new Struct(1);
+            When.Called(() => mock.StructReturn()).Then.Return(s1);
+            Assert.That(mock.StructReturn(), Is.EqualTo(s1));
+
+            Struct s2 = new Struct(2);
+            When.Called(() => mock.StructReturn()).Then.Return(s2);
+            Assert.That(mock.StructReturn(), Is.EqualTo(new Struct(2)));
         }
 
         [Test] public void ShouldStubOneArgMethod() {
@@ -49,84 +84,104 @@ namespace Auroratide.NBehave.Integration {
             Assert.That(mock.TwoArgs(2, 4), Is.EqualTo(7));
         }
 
-        [Test] public void ShouldChainStubsSequentially() {
-            When.Called(() => mock.NoArgs())
-                .Then.Return(1)
-                .Then.Return(2);
-
-            Assert.That(mock.NoArgs(), Is.EqualTo(1));
-            Assert.That(mock.NoArgs(), Is.EqualTo(2));
-        }
-
-        [Test] public void ShouldOverwritePreviousStubWhenStubbedSeparatelyWithoutArgs() {
-            When.Called(() => mock.NoArgs()).Then.Return(1);
-            When.Called(() => mock.NoArgs()).Then.Return(2);
-
-            Assert.That(mock.NoArgs(), Is.EqualTo(2));
-        }
-
-        [Test] public void ShouldOverwritePreviousStubWhenStubbedSeparatelyWithArgs() {
-            When.Called(() => mock.OneArg(1)).Then.Return(1);
-            When.Called(() => mock.OneArg(1)).Then.Return(2);
-
-            Assert.That(mock.OneArg(1), Is.EqualTo(2));
-        }
-
-        [Test] public void ShouldReturnDefaultValueWhenNotStubbed() {
-            When.Called(() => mock.OneArg(1)).Then.Return(1);
-
-            Assert.That(mock.NoArgs(), Is.EqualTo(DEFAULT_INT));
-            Assert.That(mock.OneArg(2), Is.EqualTo(DEFAULT_INT));
-        }
-
-        [Test] public void ShouldStubStringReturn() {
-            When.Called(() => mock.StringReturn()).Then.Return("hello");
-
-            Assert.That(mock.StringReturn(), Is.EqualTo("hello"));
-        }
-
         [Test] public void ShouldStubStringArgs() {
-            When.Called(() => mock.StringArg("hello")).Then.Return(1);
+            When.Called(() => mock.StringArg("hello")).Then.Return(2);
+            When.Called(() => mock.StringArg("world")).Then.Return(3);
 
-            Assert.That(mock.StringArg("hello"), Is.EqualTo(1));
+            Assert.That(mock.StringArg("hello"), Is.EqualTo(2));
+            Assert.That(mock.StringArg("world"), Is.EqualTo(3));
         }
 
-        [Test] public void ShouldAlwaysReturnValueWhenStubbingWithAlways() {
-            When.Called(() => mock.NoArgs())
-                .Then.Return(1)
-                .Then.Return(2)
-                .Always();
+        [Test] public void ShouldStubClassArgs() {
+            Class c1 = new Class();
+            Class c2 = new Class();
 
-            Assert.That(mock.NoArgs(), Is.EqualTo(1));
-            Assert.That(mock.NoArgs(), Is.EqualTo(2));
-            Assert.That(mock.NoArgs(), Is.EqualTo(2));
-            Assert.That(mock.NoArgs(), Is.EqualTo(2));
+            When.Called(() => mock.ClassArg(c1)).Then.Return(2);
+            When.Called(() => mock.ClassArg(c2)).Then.Return(3);
+
+            Assert.That(mock.ClassArg(c1), Is.EqualTo(2));
+            Assert.That(mock.ClassArg(c2), Is.EqualTo(3));
         }
 
-        [ExpectedException (typeof(SomeException))]
-        [Test] public void ShouldThrowTheGivenException() {
-            When.Called(() => mock.NoArgs()).Then.Throw(new SomeException());
-            mock.NoArgs();
+        [Test] public void ShouldStubDerivedArgs() {
+            Derived derived = new Derived();
+
+            When.Called(() => mock.ClassArg(derived)).Then.Return(2);
+
+            Assert.That(mock.ClassArg(derived), Is.EqualTo(2));
         }
 
-        [Test] public void ShouldExecuteCustomMethodWithNoArgs() {
-            int a = DEFAULT_INT;
-            When.Called(() => mock.NoArgs()).Then.Execute(args => {
-                a = 1;
-                return 2;
-            });
+        [Test] public void ShouldStubStructArgs() {
+            Struct s1 = new Struct(1);
+            Struct s2 = new Struct(2);
 
-            int result = mock.NoArgs();
+            When.Called(() => mock.StructArg(s1)).Then.Return(2);
+            When.Called(() => mock.StructArg(s2)).Then.Return(3);
 
-            Assert.That(a, Is.EqualTo(1));
-            Assert.That(result, Is.EqualTo(2));
+            Assert.That(mock.StructArg(s1), Is.EqualTo(2));
+            Assert.That(mock.StructArg(new Struct(2)), Is.EqualTo(3));
         }
 
-        [Test] public void ShouldReturnDefaultValueAfterAllStubsAreExhausted() {
-            When.Called(() => mock.NoArgs()).Then.Return(1);
+        [Test] public void ShouldStubOverloadedMethod() {
+            When.Called(() => mock.Overloaded(2)).Then.Return(3);
+            When.Called(() => mock.Overloaded("hello")).Then.Return(5);
 
-            Assert.That(mock.NoArgs(), Is.EqualTo(1));
-            Assert.That(mock.NoArgs(), Is.EqualTo(DEFAULT_INT));
+            Assert.That(mock.Overloaded(2), Is.EqualTo(3));
+            Assert.That(mock.Overloaded("hello"), Is.EqualTo(5));
+        }
+
+        [Test] public void ShouldStubMethodWithDefaultArgs() {
+            When.Called(() => mock.WithDefaults(2, "hello")).Then.Return(3);
+            When.Called(() => mock.WithDefaults(3, "hello")).Then.Return(5);
+            When.Called(() => mock.WithDefaults(4, "world")).Then.Return(7);
+
+            Assert.That(mock.WithDefaults(), Is.EqualTo(3));
+            Assert.That(mock.WithDefaults(3), Is.EqualTo(5));
+            Assert.That(mock.WithDefaults(4, "world"), Is.EqualTo(7));
+        }
+
+        [Test] public void ShouldStubGenericReturn() {
+            Class c = new Class();
+            Struct s = new Struct(1);
+
+            When.Called(() => mock.GenericReturn<int>()).Then.Return(2);
+            When.Called(() => mock.GenericReturn<string>()).Then.Return("hello");
+            When.Called(() => mock.GenericReturn<Class>()).Then.Return(c);
+            When.Called(() => mock.GenericReturn<Struct>()).Then.Return(s);
+
+            Assert.That(mock.GenericReturn<int>(), Is.EqualTo(2));
+            Assert.That(mock.GenericReturn<string>(), Is.EqualTo("hello"));
+            Assert.That(mock.GenericReturn<Class>(), Is.EqualTo(c));
+            Assert.That(mock.GenericReturn<Struct>(), Is.EqualTo(s));
+        }
+
+        [Test] public void ShouldStubGenericArgs() {
+            Class c = new Class();
+            Struct s = new Struct(1);
+
+            When.Called(() => mock.GenericArg(2)).Then.Return(3);
+            When.Called(() => mock.GenericArg("hello")).Then.Return(5);
+            When.Called(() => mock.GenericArg(c)).Then.Return(7);
+            When.Called(() => mock.GenericArg(s)).Then.Return(11);
+
+            Assert.That(mock.GenericArg(2), Is.EqualTo(3));
+            Assert.That(mock.GenericArg("hello"), Is.EqualTo(5));
+            Assert.That(mock.GenericArg(c), Is.EqualTo(7));
+            Assert.That(mock.GenericArg(s), Is.EqualTo(11));
+        }
+
+        [Test] public void ShouldStubNoReturns() {
+            bool wasCalled = false;
+            When.Called(() => mock.NoReturn()).Then.Execute(args => wasCalled = true);
+
+            mock.NoReturn();
+
+            Assert.That(wasCalled, Is.True);
+        }
+
+        [Ignore("Not yet implemented")]
+        [Test] public void ShouldThrowStubbingExceptionWhenAttemptingToStubANonMockedClass() {
+            
         }
 
         private class Mock : Core.NBehaveMock {
@@ -145,8 +200,20 @@ namespace Auroratide.NBehave.Integration {
                 }
             }
 
-            public int NoArgs() {
+            public int PrimitiveReturn() {
                 return NBehave.Call().AndReturn<int>();
+            }
+
+            public string StringReturn() {
+                return NBehave.Call().AndReturn<string>();
+            }
+
+            public Class ClassReturn() {
+                return NBehave.Call().AndReturn<Class>();
+            }
+
+            public Struct StructReturn() {
+                return NBehave.Call().AndReturn<Struct>();
             }
 
             public int OneArg(int a) {
@@ -157,16 +224,52 @@ namespace Auroratide.NBehave.Integration {
                 return NBehave.Call(a, b).AndReturn<int>();
             }
 
-            public string StringReturn() {
-                return NBehave.Call().AndReturn<string>();
-            }
-
             public int StringArg(string a) {
                 return NBehave.Call(a).AndReturn<int>();
             }
+
+            public int ClassArg(Class c) {
+                return NBehave.Call(c).AndReturn<int>();
+            }
+
+            public int StructArg(Struct s) {
+                return NBehave.Call(s).AndReturn<int>();
+            }
+
+            public int Overloaded(int a) {
+                return NBehave.Call(a).AndReturn<int>();
+            }
+
+            public int Overloaded(string s) {
+                return NBehave.Call(s).AndReturn<int>();
+            }
+
+            public int WithDefaults(int a = 2, string s = "hello") {
+                return NBehave.Call(a, s).AndReturn<int>();
+            }
+
+            public T GenericReturn<T>() {
+                return NBehave.Call().AndReturn<T>();
+            }
+
+            public int GenericArg<T>(T t) {
+                return NBehave.Call(t).AndReturn<int>();
+            }
+
+            public void NoReturn() {
+                NBehave.Call().AndExecute();
+            }
+
         }
 
-        private class SomeException : Exception {}
+        private class Class {}
+        private class Derived : Class {}
+        private struct Struct {
+            public int x;
+            public Struct(int x) {
+                this.x = x;
+            }
+        }
 
     }
 
