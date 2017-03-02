@@ -11,358 +11,338 @@ namespace Auroratide.NBehave.Integration {
         [SetUp] public void Init() {
             mock = Mock.Basic<Interface>().Create();
         }
-
-        [Test] public void ShouldStubGetter() {
-            When.Called(() => mock.Getter).Then.Return(3);
-
-            Assert.That(mock.Getter, Is.EqualTo(3));
-        }
-
+            
         [Test] public void ShouldStubProperty() {
             When.Called(() => mock.Property).Then.Return(5);
 
             Assert.That(mock.Property, Is.EqualTo(5));
         }
 
-        [Test] public void ShouldMockMethodWithNoParameters() {
-            mock.NoParameters();
+        [Test] public void ShouldVerifyNoReturns() {
+            mock.NoReturn();
 
-            Verify.That(() => mock.NoParameters()).IsCalled();
+            Verify.That(() => mock.NoReturn()).IsCalled();
         }
 
-        [Test] public void ShouldStubMethodWithNoParameters() {
-            int a = 2;
-            When.Called(() => mock.NoParameters()).Then.Execute((objs) => a = 3);
+        [Test] public void ShouldStubNoReturns() {
+            bool wasCalled = false;
+            When.Called(() => mock.NoReturn()).Then.Execute(args => wasCalled = true);
 
-            mock.NoParameters();
+            mock.NoReturn();
 
-            Assert.That(a, Is.EqualTo(3));
+            Assert.That(wasCalled, Is.True);
         }
 
-        [Test] public void ShouldMockMethodsWithPrimitiveParameters() {
-            mock.PrimitiveParameters(7, true, 9.5f);
-
-            Verify.That(() => mock.PrimitiveParameters(7, true, 9.5f)).IsCalled();
-        }
-
-        [Test] public void ShouldStubMethodWithPrimitiveParameters() {
-            int a = 2;
-            When.Called(() => mock.PrimitiveParameters(7, false, 10.3f)).Then.Execute((objs) => a = 3);
-
-            mock.PrimitiveParameters(7, false, 10.3f);
-
-            Assert.That(a, Is.EqualTo(3));
-        }
-
-        [Test] public void ShouldMockMethodsWithObjectParameters() {
-            object o = new object();
-            Class c = new Class(2, 3);
-            mock.ObjectParameters("Hello!", o, c);
-
-            Verify.That(() => mock.ObjectParameters("Hello!", o, c)).IsCalled();
-        }
-
-        [Test] public void ShouldStubMethodWithObjectParameters() {
-            int a = 2;
-            object o = new object();
-            Class c = new Class(2, 3);
-            When.Called(() => mock.ObjectParameters("Hello!", o, c)).Then.Execute((objs) => a = 3);
-
-            mock.ObjectParameters("Hello!", o, c);
-
-            Assert.That(a, Is.EqualTo(3));
-        }
-            
-        [Test] public void ShouldMockMethodsWithStructParameters() {
-            Struct s = new Struct(2, 3);
-            mock.StructParameters(s);
-
-            Verify.That(() => mock.StructParameters(s)).IsCalled();
-        }
-
-        [Test] public void ShouldStubMethodWithStructParameters() {
-            int a = 2;
-            Struct s = new Struct(2, 3);
-            When.Called(() => mock.StructParameters(s)).Then.Execute((objs) => a = 3);
-
-            mock.StructParameters(s);
-
-            Assert.That(a, Is.EqualTo(3));
-        }
-
-        [Test] public void ShouldMockMethodsWithPrimitiveReturn() {
+        [Test] public void ShouldVerifyPrimitiveReturn() {
             mock.PrimitiveReturn();
 
             Verify.That(() => mock.PrimitiveReturn()).IsCalled();
         }
 
-        [Test] public void ShouldStubMethodsWithPrimitiveReturn() {
+        [Test] public void ShouldStubPrimitiveReturn() {
             When.Called(() => mock.PrimitiveReturn()).Then.Return(7);
-            int answer = mock.PrimitiveReturn();
 
-            Assert.That(answer, Is.EqualTo(7));
+            Assert.That(mock.PrimitiveReturn(), Is.EqualTo(7));
         }
 
-        [Test] public void ShouldMockMethodWithObjectReturn() {
-            mock.ObjectReturn();
+        [Test] public void ShouldVerifyStringReturn() {
+            mock.StringReturn();
 
-            Verify.That(() => mock.ObjectReturn()).IsCalled();
+            Verify.That(() => mock.StringReturn()).IsCalled();
         }
 
-        [Test] public void ShouldStubMethodsWithObjectReturn() {
-            When.Called(() => mock.ObjectReturn()).Then.Return("Hello!");
-            string answer = mock.ObjectReturn();
+        [Test] public void ShouldStubStringReturn() {
+            When.Called(() => mock.StringReturn()).Then.Return("hello");
 
-            Assert.That(answer, Is.EqualTo("Hello!"));
+            Assert.That(mock.StringReturn(), Is.EqualTo("hello"));
         }
-            
-        [Test] public void ShouldMockMethodWithStructReturn() {
+
+        [Test] public void ShouldVerifyClassReturn() {
+            mock.ClassReturn();
+
+            Verify.That(() => mock.ClassReturn()).IsCalled();
+        }
+
+        [Test] public void ShouldStubClassReturn() {
+            Class c = new Class();
+            When.Called(() => mock.ClassReturn()).Then.Return(c);
+
+            Assert.That(mock.ClassReturn(), Is.EqualTo(c));
+        }
+
+        [Test] public void ShouldStubDerivedReturn() {
+            Derived d = new Derived();
+            When.Called(() => mock.ClassReturn()).Then.Return(d);
+
+            Assert.That(mock.ClassReturn(), Is.EqualTo(d));
+        }
+
+        [Test] public void ShouldVerifyStructReturn() {
             mock.StructReturn();
 
             Verify.That(() => mock.StructReturn()).IsCalled();
         }
 
-        [Test] public void ShouldStubMethodsWithStructReturn() {
-            When.Called(() => mock.StructReturn()).Then.Return(new Struct(2, 3));
-            Struct answer = mock.StructReturn();
+        [Test] public void ShouldStubStructReturn() {
+            Struct s = new Struct(2);
+            Struct equivalent = new Struct(2);
+            When.Called(() => mock.StructReturn()).Then.Return(s);
 
-            Assert.That(answer.x, Is.EqualTo(2));
-            Assert.That(answer.y, Is.EqualTo(3));
+            Struct actual = mock.StructReturn();
+            Assert.That(actual, Is.EqualTo(s));
+            Assert.That(actual, Is.EqualTo(equivalent));
         }
 
-        [Test] public void ShouldMockMethodWithTypeParams() {
-            mock.TypeParams<int>();
-            mock.TypeParams<string>();
-            mock.TypeParams<Class>();
-            mock.TypeParams<Struct>();
+        [Test] public void ShouldVerifyGenericReturn() {
+            mock.GenericReturn<int>();
+            mock.GenericReturn<string>();
+            mock.GenericReturn<Class>();
+            mock.GenericReturn<Struct>();
 
-            Verify.That(() => mock.TypeParams<int>()).IsCalled();
-            Verify.That(() => mock.TypeParams<string>()).IsCalled();
-            Verify.That(() => mock.TypeParams<Class>()).IsCalled();
-            Verify.That(() => mock.TypeParams<Struct>()).IsCalled();
+            Verify.That(() => mock.GenericReturn<int>()).IsCalled();
+            Verify.That(() => mock.GenericReturn<string>()).IsCalled();
+            Verify.That(() => mock.GenericReturn<Class>()).IsCalled();
+            Verify.That(() => mock.GenericReturn<Struct>()).IsCalled();
         }
 
-        [Test] public void ShouldStubMethodsWithTypeParams() {
-            When.Called(() => mock.TypeParams<int>()).Then.Return(7);
-            When.Called(() => mock.TypeParams<string>()).Then.Return("Hi");
-            When.Called(() => mock.TypeParams<Class>()).Then.Return(new Class(2, 3));
-            When.Called(() => mock.TypeParams<Struct>()).Then.Return(new Struct(5, 7));
+        [Test] public void ShouldStubGenericReturn() {
+            Class c = new Class();
+            Struct s = new Struct(2);
+            When.Called(() => mock.GenericReturn<int>()).Then.Return(3);
+            When.Called(() => mock.GenericReturn<string>()).Then.Return("hello");
+            When.Called(() => mock.GenericReturn<Class>()).Then.Return(c);
+            When.Called(() => mock.GenericReturn<Struct>()).Then.Return(s);
 
-            int intAnswer = mock.TypeParams<int>();
-            string stringAnswer = mock.TypeParams<string>();
-            Class classAnswer = mock.TypeParams<Class>();
-            Struct structAnswer = mock.TypeParams<Struct>();
-
-            Assert.That(intAnswer, Is.EqualTo(7));
-            Assert.That(stringAnswer, Is.EqualTo("Hi"));
-            Assert.That(classAnswer.x, Is.EqualTo(2));
-            Assert.That(classAnswer.y, Is.EqualTo(3));
-            Assert.That(structAnswer.x, Is.EqualTo(5));
-            Assert.That(structAnswer.y, Is.EqualTo(7));
-        }
-            
-        [Test] public void ShouldMockMethodsWithMultipleTypeParams() {
-            mock.MultipleTypeParams<int, string>();
-
-            Verify.That(() => mock.MultipleTypeParams<int, string>()).IsCalled();
+            Assert.That(mock.GenericReturn<int>(), Is.EqualTo(3));
+            Assert.That(mock.GenericReturn<string>(), Is.EqualTo("hello"));
+            Assert.That(mock.GenericReturn<Class>(), Is.EqualTo(c));
+            Assert.That(mock.GenericReturn<Struct>(), Is.EqualTo(s));
         }
 
-        [Test] public void ShouldStubMethodWithMultipleTypeParams() {
-            When.Called(() => mock.MultipleTypeParams<string, float>()).Then.Return(2);
+        [Test] public void ShouldVerifyPrimitiveArg() {
+            mock.PrimitiveArg(2);
 
-            int answer = mock.MultipleTypeParams<string, float>();
-
-            Assert.That(answer, Is.EqualTo(2));
+            Verify.That(() => mock.PrimitiveArg(2)).IsCalled();
+            Verify.That(() => mock.PrimitiveArg(3)).IsNotCalled();
         }
 
-        [Test] public void ShouldMockMethodUsingGenericParamsAsArguments() {
-            Class c = new Class(2, 3);
-            Struct s = new Struct(3, 5);
+        [Test] public void ShouldStubPrimitiveArg() {
+            When.Called(() => mock.PrimitiveArg(2)).Then.Return(3);
 
-            mock.TypeParamsAsArguments(2);
-            mock.TypeParamsAsArguments("Hi");
-            mock.TypeParamsAsArguments(c);
-            mock.TypeParamsAsArguments(s);
-
-            Verify.That(() => mock.TypeParamsAsArguments(2)).IsCalled();
-            Verify.That(() => mock.TypeParamsAsArguments("Hi")).IsCalled();
-            Verify.That(() => mock.TypeParamsAsArguments(c)).IsCalled();
-            Verify.That(() => mock.TypeParamsAsArguments(s)).IsCalled();
+            Assert.That(mock.PrimitiveArg(2), Is.EqualTo(3));
         }
 
-        [Test] public void ShouldStubMethodUsingGenericParamsAsArguments() {
-            Class c = new Class(2, 3);
-            Struct s = new Struct(3, 5);
-            When.Called(() => mock.TypeParamsAsArguments<int>(2)).Then.Return(3);
-            When.Called(() => mock.TypeParamsAsArguments<string>("Hi")).Then.Return(5);
-            When.Called(() => mock.TypeParamsAsArguments<Class>(c)).Then.Return(7);
-            When.Called(() => mock.TypeParamsAsArguments<Struct>(s)).Then.Return(11);
+        [Test] public void ShouldVerifyStringArg() {
+            mock.StringArg("hello");
 
-            int intAns = mock.TypeParamsAsArguments(2);
-            int stringAns = mock.TypeParamsAsArguments("Hi");
-            int classAns = mock.TypeParamsAsArguments(c);
-            int structAns = mock.TypeParamsAsArguments(s);
-
-            Assert.That(intAns, Is.EqualTo(3));
-            Assert.That(stringAns, Is.EqualTo(5));
-            Assert.That(classAns, Is.EqualTo(7));
-            Assert.That(structAns, Is.EqualTo(11));
+            Verify.That(() => mock.StringArg("hello")).IsCalled();
+            Verify.That(() => mock.StringArg("world")).IsNotCalled();
         }
 
-        [Test] public void ShouldMockMethodsWithConstrainedTypeParameters() {
-            Class c = new Class(2, 3);
-            SubClass s = new SubClass(5, 7, 11);
+        [Test] public void ShouldStubStringArg() {
+            When.Called(() => mock.StringArg("hello")).Then.Return(2);
 
-            mock.ConstrainedTypeParam(c);
-            mock.ConstrainedTypeParam(s);
-
-            Verify.That(() => mock.ConstrainedTypeParam(c)).IsCalled();
-            Verify.That(() => mock.ConstrainedTypeParam(s)).IsCalled();
+            Assert.That(mock.StringArg("hello"), Is.EqualTo(2));
         }
 
-        [Test] public void ShouldStubMethodsWithConstrainedTypeParameters() {
-            Class c = new Class(2, 3);
-            SubClass s = new SubClass(5, 7, 11);
-            Class cAns = new Class(13, 17);
-            SubClass sAns = new SubClass(19, 23, 29);
-            When.Called(() => mock.ConstrainedTypeParam(c)).Then.Return(cAns);
-            When.Called(() => mock.ConstrainedTypeParam(s)).Then.Return(sAns);
+        [Test] public void ShouldVerifyClassArg() {
+            Class called = new Class();
+            Class notCalled = new Class();
+            mock.ClassArg(called);
 
-            var cActual = mock.ConstrainedTypeParam(c);
-            var sActual = mock.ConstrainedTypeParam(s);
-
-            Assert.That(cActual.x, Is.EqualTo(cAns.x));
-            Assert.That(cActual.y, Is.EqualTo(cAns.y));
-            Assert.That(sActual.x, Is.EqualTo(sAns.x));
-            Assert.That(sActual.y, Is.EqualTo(sAns.y));
-            Assert.That(sActual.z, Is.EqualTo(sAns.z));
+            Verify.That(() => mock.ClassArg(called)).IsCalled();
+            Verify.That(() => mock.ClassArg(notCalled)).IsNotCalled();
         }
 
-        [Test] public void ShouldMockOverloadedMethod() {
-            int n = 3;
-            string s = "string";
+        [Test] public void ShouldStubClassArg() {
+            Class c = new Class();
+            When.Called(() => mock.ClassArg(c)).Then.Return(2);
 
-            mock.Overloaded();
+            Assert.That(mock.ClassArg(c), Is.EqualTo(2));
+        }
 
-            Verify.That(() => mock.Overloaded()).IsCalled();
-            Verify.That(() => mock.Overloaded(n)).IsNotCalled();
-            Verify.That(() => mock.Overloaded(s)).IsNotCalled();
-            Verify.That(() => mock.Overloaded(n, s)).IsNotCalled();
+        [Test] public void ShouldVerifyDerivedArg() {
+            Derived called = new Derived();
+            Derived notCalled = new Derived();
+            mock.ClassArg(called);
 
-            mock.Overloaded(n);
+            Verify.That(() => mock.ClassArg(called)).IsCalled();
+            Verify.That(() => mock.ClassArg(notCalled)).IsNotCalled();
+        }
 
-            Verify.That(() => mock.Overloaded(n)).IsCalled();
-            Verify.That(() => mock.Overloaded(s)).IsNotCalled();
-            Verify.That(() => mock.Overloaded(n, s)).IsNotCalled();
+        [Test] public void ShouldStubDerivedArg() {
+            Derived d = new Derived();
+            When.Called(() => mock.ClassArg(d)).Then.Return(2);
 
-            mock.Overloaded(s);
+            Assert.That(mock.ClassArg(d), Is.EqualTo(2));
+        }
 
-            Verify.That(() => mock.Overloaded(s)).IsCalled();
-            Verify.That(() => mock.Overloaded(n, s)).IsNotCalled();
+        [Test] public void ShouldVerifyStructArg() {
+            Struct called = new Struct(2);
+            Struct notCalled = new Struct(3);
+            mock.StructArg(called);
 
-            mock.Overloaded(n, s);
+            Verify.That(() => mock.StructArg(called)).IsCalled();
+            Verify.That(() => mock.StructArg(notCalled)).IsNotCalled();
+        }
 
-            Verify.That(() => mock.Overloaded(n, s)).IsCalled();
+        [Test] public void ShouldStubStructArg() {
+            Struct s = new Struct(2);
+            When.Called(() => mock.StructArg(s)).Then.Return(3);
+
+            Assert.That(mock.StructArg(s), Is.EqualTo(3));
+        }
+
+        [Test] public void ShouldVerifyGenericArg() {
+            Class c = new Class();
+            Struct s = new Struct(1);
+
+            mock.GenericArg(2);
+            mock.GenericArg("hello");
+            mock.GenericArg(c);
+            mock.GenericArg(s);
+
+            Verify.That(() => mock.GenericArg(2)).IsCalled();
+            Verify.That(() => mock.GenericArg("hello")).IsCalled();
+            Verify.That(() => mock.GenericArg(c)).IsCalled();
+            Verify.That(() => mock.GenericArg(s)).IsCalled();
+        }
+
+        [Test] public void ShouldStubGenericArg() {
+            Class c = new Class();
+            Struct s = new Struct(2);
+
+            When.Called(() => mock.GenericArg(2)).Then.Return(3);
+            When.Called(() => mock.GenericArg("hello")).Then.Return(5);
+            When.Called(() => mock.GenericArg(c)).Then.Return(7);
+            When.Called(() => mock.GenericArg(s)).Then.Return(11);
+
+            Assert.That(mock.GenericArg(2), Is.EqualTo(3));
+            Assert.That(mock.GenericArg("hello"), Is.EqualTo(5));
+            Assert.That(mock.GenericArg(c), Is.EqualTo(7));
+            Assert.That(mock.GenericArg(s), Is.EqualTo(11));
+        }
+
+        [Test] public void ShouldVerifyMultipleArgs() {
+            mock.TwoArgs(2, "hello");
+
+            Verify.That(() => mock.TwoArgs(2, "hello")).IsCalled();
+            Verify.That(() => mock.TwoArgs(2, "world")).IsNotCalled();
+            Verify.That(() => mock.TwoArgs(3, "hello")).IsNotCalled();
+        }
+
+        [Test] public void ShouldStubMultipleArgs() {
+            When.Called(() => mock.TwoArgs(2, "hello")).Then.Return(5);
+
+            Assert.That(mock.TwoArgs(2, "hello"), Is.EqualTo(5));
+        }
+
+        [Test] public void ShouldVerifyMultipleGenericParams() {
+            mock.TwoGenericParams(2, "hello");
+
+            Verify.That(() => mock.TwoGenericParams(2, "hello")).IsCalled();
+        }
+
+        [Test] public void ShouldStubMultipleGenericParams() {
+            When.Called(() => mock.TwoGenericParams("hello", 2.3f)).Then.Return(2);
+
+            Assert.That(mock.TwoGenericParams("hello", 2.3f), Is.EqualTo(2));
+        }
+
+        [Test] public void ShouldVerifyConstrainedGenericParam() {
+            Class c = new Class();
+            Derived d = new Derived();
+
+            mock.ConstrainedGenericParam(c);
+            mock.ConstrainedGenericParam(d);
+
+            Verify.That(() => mock.ConstrainedGenericParam(c)).IsCalled();
+            Verify.That(() => mock.ConstrainedGenericParam(d)).IsCalled();
+        }
+
+        [Test] public void ShouldStubConstrainedGenericParam() {
+            Class cArg = new Class();
+            Derived dArg = new Derived();
+            Class cRet = new Class();
+            Derived dRet = new Derived();
+
+            When.Called(() => mock.ConstrainedGenericParam(cArg)).Then.Return(cRet);
+            When.Called(() => mock.ConstrainedGenericParam(dArg)).Then.Return(dRet);
+
+            Assert.That(mock.ConstrainedGenericParam(cArg), Is.EqualTo(cRet));
+            Assert.That(mock.ConstrainedGenericParam(dArg), Is.EqualTo(dRet));
+        }
+
+        [Test] public void ShouldVerifyOverloadedMethod() {
+            mock.Overloaded(2);
+            mock.Overloaded("hello");
+
+            Verify.That(() => mock.Overloaded(2)).IsCalled();
+            Verify.That(() => mock.Overloaded("hello")).IsCalled();
         }
 
         [Test] public void ShouldStubOverloadedMethod() {
-            int n = 3;
-            string s = "string";
-            When.Called(() => mock.Overloaded()).Then.Return(2);
-            When.Called(() => mock.Overloaded(n)).Then.Return(3);
-            When.Called(() => mock.Overloaded(s)).Then.Return(5);
-            When.Called(() => mock.Overloaded(n, s)).Then.Return(7);
+            When.Called(() => mock.Overloaded(2)).Then.Return(3);
+            When.Called(() => mock.Overloaded("hello")).Then.Return(5);
 
-            Assert.That(mock.Overloaded(), Is.EqualTo(2));
-            Assert.That(mock.Overloaded(n), Is.EqualTo(3));
-            Assert.That(mock.Overloaded(s), Is.EqualTo(5));
-            Assert.That(mock.Overloaded(n, s), Is.EqualTo(7));
+            Assert.That(mock.Overloaded(2), Is.EqualTo(3));
+            Assert.That(mock.Overloaded("hello"), Is.EqualTo(5));
         }
 
-        [Ignore("fails")]
-        [Test] public void ShouldMockMethodsWithContinuousParams() {
-            mock.Continuous(2);
-            mock.Continuous(3, 5);
-            mock.Continuous(7, 11, 13);
+        [Test] public void ShouldVerifyMethodWithDefaults() {
+            mock.WithDefaults();
+            mock.WithDefaults(3);
+            mock.WithDefaults(5, "world");
 
-            Verify.That(() => mock.Continuous(2)).IsCalled();
-            Verify.That(() => mock.Continuous(3, 5)).IsCalled();
-            Verify.That(() => mock.Continuous(7, 11, 13)).IsCalled();
-
-            int[] ints = new int[] { 1, 2, 3, 4 };
-            mock.Continuous(ints);
-
-            Verify.That(() => mock.Continuous(1, 2, 3, 4)).IsCalled();
+            Verify.That(() => mock.WithDefaults(2, "hello")).IsCalled();
+            Verify.That(() => mock.WithDefaults(3, "hello")).IsCalled();
+            Verify.That(() => mock.WithDefaults(5, "world")).IsCalled();
         }
 
-        [Ignore("fails")]
-        [Test] public void ShouldStubMethodsWithContinuousParams() {
-            When.Called(() => mock.Continuous(2)).Then.Return("one");
-            When.Called(() => mock.Continuous(3, 5)).Then.Return("two");
-            When.Called(() => mock.Continuous(7, 11, 13)).Then.Return("three");
+        [Test] public void ShouldStubMethodWithDefaults() {
+            When.Called(() => mock.WithDefaults(2, "hello")).Then.Return(3);
+            When.Called(() => mock.WithDefaults(3, "hello")).Then.Return(5);
+            When.Called(() => mock.WithDefaults(5, "world")).Then.Return(7);
 
-            Assert.That(mock.Continuous(2), Is.EqualTo("one"));
-            Assert.That(mock.Continuous(3, 5), Is.EqualTo("two"));
-            Assert.That(mock.Continuous(7, 11, 13), Is.EqualTo("three"));
+            Assert.That(mock.WithDefaults(), Is.EqualTo(3));
+            Assert.That(mock.WithDefaults(3), Is.EqualTo(5));
+            Assert.That(mock.WithDefaults(5, "world"), Is.EqualTo(7));
         }
 
         private interface Interface {
-            int Getter { get; }
             int Property { get; set; }
 
-            void NoParameters();
-            void PrimitiveParameters(int n, bool b, float f);
-            void ObjectParameters(string s, object o, Class c);
-            void StructParameters(Struct s);
-
+            void NoReturn();
             int PrimitiveReturn();
-            string ObjectReturn();
+            string StringReturn();
+            Class ClassReturn();
             Struct StructReturn();
+            T GenericReturn<T>();
 
-            T TypeParams<T>();
-            int MultipleTypeParams<T1, T2>();
-            int TypeParamsAsArguments<T>(T t);
-            T ConstrainedTypeParam<T>(T t) where T : Class;
+            int PrimitiveArg(int a);
+            int StringArg(string s);
+            int ClassArg(Class c);
+            int StructArg(Struct s);
+            int GenericArg<T>(T t);
 
-            int Overloaded();
+            int TwoArgs(int a, string b);
+            int TwoGenericParams<T1, T2>(T1 t1, T2 t2);
+
+            T ConstrainedGenericParam<T>(T t) where T : Class;
+
             int Overloaded(int n);
             int Overloaded(string s);
-            int Overloaded(int n, string s);
 
-            string Continuous(params int[] args);
+            int WithDefaults(int a = 2, string s = "hello");
         }
 
-        private interface GenericInterface<T> {
-            int NormalMethod(string s);
-            T GenericReturn();
-            void GenericParam(T t);
-        }
-
-        private class Class {
-            public int x;
-            public int y;
-
-            public Class(int x, int y) {
-                this.x = x;
-                this.y = y;
-            }
-        }
-
-        private class SubClass : Class {
-            public int z;
-
-            public SubClass(int x, int y, int z):base(x, y) {
-                this.z = z;
-            }
-        }
+        private class Class {}
+        private class Derived : Class {}
 
         private struct Struct {
             public int x;
-            public int y;
-
-            public Struct(int x, int y) {
+            public Struct(int x) {
                 this.x = x;
-                this.y = y;
             }
         }
 
