@@ -9,7 +9,7 @@ namespace Auroratide.NBehave.Internal {
         public NBehaviourEmitter(ModuleBuilder moduleBuilder):base(moduleBuilder) {}
 
         override public Type BuildType() {
-            TypeBuilder typeBuilder = moduleBuilder.DefineType(type.Name, TypeAttributes.Public | TypeAttributes.Class | TypeAttributes.AutoClass, typeof(Unity.NBehaviour));
+            TypeBuilder typeBuilder = moduleBuilder.DefineType(type.FullName, TypeAttributes.Public | TypeAttributes.Class | TypeAttributes.AutoClass, typeof(Unity.NBehaviour));
             typeBuilder.AddInterfaceImplementation(type);
 
             PropertyInfo nbehaveProperty = typeof(Unity.NBehaviour).GetProperty("NBehave");

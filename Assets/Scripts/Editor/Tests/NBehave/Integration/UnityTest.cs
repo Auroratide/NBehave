@@ -7,58 +7,62 @@ namespace Auroratide.NBehave.Integration {
     using Unity;
 
     public class UnityTest {
-        private const string METHOD_PARAM = "hello";
-        private const float TOLERANCE = 0.000001f;
 
         GameObject gameObject;
-        Behaviour behaviour;
-        IDependency dependency;
 
         [SetUp] public void Init() {
             gameObject = new GameObject();
-
-            dependency = gameObject.AddMockComponent<IDependency>();
-            behaviour = gameObject.AddComponent<Behaviour>();
-
-            behaviour.Awake();
         }
 
-        [Test] public void ShouldMockMethodsOfMockedComponents() {
-            behaviour.Move();
+        [Test] public void ShouldAllowSendMessageToBeUsedOnGameObjects() {
+            Behaviour behaviour = gameObject.AddComponent<Behaviour>();
 
-            Verify.That(() => dependency.Method(METHOD_PARAM)).IsCalled();
+            gameObject.AllowRunInEditMode();
+            gameObject.SendMessage("Update");
+
+            Assert.That(behaviour.UpdateCalled, Is.EqualTo(1));
         }
 
-        [Test] public void ShouldStubMethodsOfMockedComponents() {
-            When.Called(() => dependency.Method(METHOD_PARAM)).Then.Return(6);
+        [Test] public void ShouldAllowBroadcastMessageToBeUsedOnGameObjects() {
+            Behaviour behaviour = gameObject.AddComponent<Behaviour>();
 
-            behaviour.Move();
+            gameObject.AllowRunInEditMode();
+            gameObject.BroadcastMessage("Update");
 
-            Assert.That(gameObject.transform.position.x, Is.EqualTo(6).Within(TOLERANCE));
+            Assert.That(behaviour.UpdateCalled, Is.EqualTo(1));
+        }
+
+        [Test] public void ShouldVerifyMockComponent() {
+            IBehaviour behaviour = gameObject.AddMockComponent<IBehaviour>();
+
+            behaviour.Method();
+
+            Verify.That(() => behaviour.Method()).IsCalled();
+        }
+
+        [Test] public void ShouldStubMockComponent() {
+            IBehaviour behaviour = gameObject.AddMockComponent<IBehaviour>();
+            When.Called(() => behaviour.Method()).Then.Return(2);
+
+            Assert.That(behaviour.Method(), Is.EqualTo(2));
         }
 
         private class Behaviour : MonoBehaviour {
-            private IDependency dependency;
 
-            public void Awake() {
-                this.dependency = GetComponent<IDependency>();
+            private int updateCalled = 0;
+
+            public int UpdateCalled {
+                get { return updateCalled; }
             }
 
-            public void Move() {
-                int amountToMove = dependency.Method(METHOD_PARAM);
-                transform.Translate(new Vector3(amountToMove, 0, 0));
-            }
+            public void Update() { ++updateCalled; }
+
         }
 
-        private interface IDependency {
-            int Method(string s);
+        private interface IBehaviour {
+            int Method();
         }
 
-        private class Dependency : MonoBehaviour, IDependency {
-            public int Method(string s) {
-                return s.Length;
-            }
-        }
     }
 
 }

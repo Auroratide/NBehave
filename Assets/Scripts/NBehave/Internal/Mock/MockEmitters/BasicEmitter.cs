@@ -10,7 +10,7 @@ namespace Auroratide.NBehave.Internal {
         public BasicEmitter(ModuleBuilder moduleBuilder):base(moduleBuilder) {}
 
         override public Type BuildType() {
-            TypeBuilder typeBuilder = moduleBuilder.DefineType(type.Name, TypeAttributes.Public | TypeAttributes.Class | TypeAttributes.AutoClass, null);
+            TypeBuilder typeBuilder = moduleBuilder.DefineType(type.FullName, TypeAttributes.Public | TypeAttributes.Class | TypeAttributes.AutoClass, null);
             typeBuilder.AddInterfaceImplementation(type);
             typeBuilder.AddInterfaceImplementation(typeof(NBehaveMock));
 

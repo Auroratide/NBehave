@@ -13,7 +13,7 @@ namespace Auroratide.NBehave.Core {
         }
 
         public Type Emit() {
-            Type cachedType = moduleBuilder.GetType(type.Name);
+            Type cachedType = moduleBuilder.GetType(type.FullName);
 
             if(cachedType != null)
                 return cachedType;
