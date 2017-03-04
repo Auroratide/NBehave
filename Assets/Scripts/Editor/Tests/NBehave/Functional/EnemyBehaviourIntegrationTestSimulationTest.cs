@@ -10,13 +10,12 @@ namespace Auroratide.NBehave.Functional {
         private const float TOLERANCE = 0.000001f;
 
         EnemyBehaviour behaviour;
-        MoveSystem movement;
 
         GameObject gameObject;
 
         [SetUp] public void Init() {
             gameObject = new GameObject();
-            movement = gameObject.AddComponent<MoveSystemEx>();
+            gameObject.AddComponent<MoveSystemEx>();
             behaviour = gameObject.AddComponent<EnemyBehaviourEx>();
 
             behaviour.Configure(new EnemyBehaviour.Config());

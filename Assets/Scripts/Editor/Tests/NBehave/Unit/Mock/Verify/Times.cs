@@ -3,7 +3,7 @@
 
         public ReturnsList Returns = new ReturnsList();
 
-        public string ToString() {
+        override public string ToString() {
             return Returns.ToString.Dequeue();
         }
 
@@ -12,7 +12,7 @@
         }
 
         public class ReturnsList {
-            public Queue<string> ToString = new Queue<string>();
+            new public Queue<string> ToString = new Queue<string>();
             public Dictionary<int, bool> Matches = new Dictionary<int, bool>();
         }
 

@@ -54,7 +54,7 @@ namespace Auroratide.NBehave.Unit.When {
             returns[matchers] = new List<Core.StubAction>();
             returns[matchers].Add(action);
 
-            Core.StubAction actualAction = methodStub.NextReturnAction(2, "hello");
+            methodStub.NextReturnAction(2, "hello");
 
             Assert.That(returns[matchers].Contains(action), Is.False);
         }

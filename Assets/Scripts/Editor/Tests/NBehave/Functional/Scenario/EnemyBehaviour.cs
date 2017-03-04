@@ -23,9 +23,9 @@ namespace Auroratide.NBehave.Functional {
 
         public void Update() {
             ++count;
-            if(count % 15 == 0)
+            if(count % (3 * config.period) == 0)
                 movement.TurnRight();
-            else if(count % 5 == 0)
+            else if(count % config.period == 0)
                 movement.Forward();
         }
 

@@ -8,14 +8,14 @@
         public ReturnList Returns = new ReturnList();
 
         public Core.OngoingStubbing With(params object[] arguments) {
-            if(arguments.Length == 2 && (int)arguments[0] == 2 && arguments[1] == "hello")
+            if(arguments.Length == 2 && (int)arguments[0] == 2 && (string)arguments[1] == "hello")
                 return Returns.With.Dequeue();
             else
                 return null;
         }
 
         public Core.StubAction NextReturnAction(params object[] arguments) {
-            if(arguments.Length == 2 && (int)arguments[0] == 2 && arguments[1] == "hello")
+            if(arguments.Length == 2 && (int)arguments[0] == 2 && (string)arguments[1] == "hello")
                 return Returns.NextReturnAction.Dequeue();
             else
                 return null;

@@ -193,7 +193,7 @@ namespace Auroratide.NBehave.Integration {
 
         private class OddNumberOfTimes : Core.Times {
             
-            public string ToString() {
+            override public string ToString() {
                 return "odd number of times";
             }
 
