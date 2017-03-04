@@ -3,11 +3,36 @@ using System.Linq.Expressions;
 
 namespace Auroratide.NBehave {
 
+/// <summary>
+/// Stub methods to do your bidding!
+/// </summary>
     public static class When {
+
+    /// <summary>
+    /// Stub a void method to perform a given action. This is used when the method you want to stub returns nothing.
+    /// </summary>
+    /// <param name="call">A lambda that always takes no parameters and executes the method you want to stub. See example.</param>
+    /// <example>
+    /// For more detail, visit the README. Otherwise, all stubbing statements should look approximately like the below.
+    /// <code>
+    /// When.Called(() => mock.Method("hello!")).Then.Execute(args => ++counter);
+    /// </code>
+    /// </example>
         public static Core.OngoingStubbing Called(Expression<Action> call) {
             return StubMethod(call.Body as MethodCallExpression);
         }
 
+    /// <summary>
+    /// Stub a method or property to return a given value or perform a given action. This is used when the method returns something or is a getter.
+    /// </summary>
+    /// <param name="call">A lambda that always takes no parameters and executes the method you want to stub. See example.</param>
+    /// <example>
+    /// For more detail, visit the README. Otherwise, all stubbing statements should look approximately like the below.
+    /// <code>
+    /// When.Called(() => mock.Property).Then.Return("string");
+    /// When.Called(() => mock.Method("hello!")).Then.Return(5);
+    /// </code>
+    /// </example>
         public static Core.OngoingStubbing Called<T>(Expression<Func<T>> call) {
             if(call.Body is MethodCallExpression)
                 return StubMethod(call.Body as MethodCallExpression);
