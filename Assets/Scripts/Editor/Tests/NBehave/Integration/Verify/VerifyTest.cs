@@ -185,27 +185,6 @@ namespace Auroratide.NBehave.Integration {
             Verify.That(() => mock.WithDefaults(2, "hello")).IsCalled();
         }
 
-        [Ignore("Future version")]
-        [Test] public void ShouldVerifyWithContinuousArgs() {
-            mock.ContinuousArgs();
-            mock.ContinuousArgs(2);
-            mock.ContinuousArgs(2, 3);
-            mock.ContinuousArgs(2, 3, 5);
-
-            Verify.That(() => mock.ContinuousArgs()).IsCalled();
-            Verify.That(() => mock.ContinuousArgs(2)).IsCalled();
-            Verify.That(() => mock.ContinuousArgs(3)).IsCalled();
-            Verify.That(() => mock.ContinuousArgs(5)).IsCalled();
-        }
-
-        [Ignore("Future version")]
-        [ExpectedException (typeof(VerificationException))]
-        [Test] public void ShouldThrowVerificationExceptionWhenContinuousArgsMethodWasCalledWithWrongArguments() {
-            mock.ContinuousArgs(2, 3);
-
-            Verify.That(() => mock.ContinuousArgs(3, 5)).IsCalled();
-        }
-
         [Ignore("Not yet implemented")]
         [Test] public void ShouldThrowVerificationExceptionWhenAttemptingToVerifyNonMockedClass() {
             
