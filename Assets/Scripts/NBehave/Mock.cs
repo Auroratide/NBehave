@@ -12,7 +12,7 @@ namespace Auroratide.NBehave {
         private static ModuleBuilder moduleBuilder = null;
 
     /// <summary>
-    /// Create a basic mock of an interface. The mock will implement exactly the given interface.
+    /// Create a basic mock of an interface. The mock will implement exactly the given interface. Note you can only mock interfaces, not classes!
     /// </summary>
     /// <typeparam name="T">The interface to mock.</typeparam>
     /// <example>

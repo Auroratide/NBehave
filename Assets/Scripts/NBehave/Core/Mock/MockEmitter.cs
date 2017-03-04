@@ -22,6 +22,9 @@ namespace Auroratide.NBehave.Core {
         public MockEmitter(ModuleBuilder moduleBuilder) {
             this.type = typeof(T);
             this.moduleBuilder = moduleBuilder;
+
+            if(!this.type.IsInterface)
+                throw new Exceptions.MockingException(this.type);
         }
 
     /// <summary>
@@ -40,5 +43,6 @@ namespace Auroratide.NBehave.Core {
     /// Builds the mocked type from the ground up, implementing the interface and <c>NBehaveMock</c>.
     /// </summary>
         public abstract Type BuildType();
+
     }
 }

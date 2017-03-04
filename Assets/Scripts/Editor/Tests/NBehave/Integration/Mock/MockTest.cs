@@ -309,6 +309,11 @@ namespace Auroratide.NBehave.Integration {
             Assert.That(mock.WithDefaults(5, "world"), Is.EqualTo(7));
         }
 
+        [ExpectedException (typeof(Exceptions.MockingException))]
+        [Test] public void ShouldThrowMockingExceptionWhenAttemptingToMockANonInterfaceType() {
+            Mock.Basic<Class>();
+        }
+
         private interface Interface {
             int Property { get; set; }
 

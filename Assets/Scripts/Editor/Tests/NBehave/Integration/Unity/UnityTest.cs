@@ -47,6 +47,11 @@ namespace Auroratide.NBehave.Integration {
             Assert.That(behaviour.Method(), Is.EqualTo(2));
         }
 
+        [ExpectedException (typeof(Exceptions.MockingException))]
+        [Test] public void ShouldThrowStubbingExceptionWhenAttemptingToMockNonInterfaceBehaviour() {
+            gameObject.AddMockComponent<Behaviour>();
+        }
+
         private class Behaviour : MonoBehaviour {
 
             private int updateCalled = 0;
