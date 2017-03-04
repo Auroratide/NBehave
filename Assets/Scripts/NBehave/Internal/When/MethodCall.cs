@@ -14,8 +14,13 @@
             Core.StubAction action = stub.NextReturnAction(arguments);
             if (action == null)
                 return default(T);
-            else 
-                return (T)action.Return(arguments);
+            else {
+                object returnValue = action.Return(arguments);
+                if(returnValue is T)
+                    return (T)action.Return(arguments);
+                else
+                    throw new Exceptions.StubbingException(returnValue.GetType(), typeof(T));
+            }
         }
 
         public void AndExecute() {

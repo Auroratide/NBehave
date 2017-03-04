@@ -51,6 +51,15 @@ namespace Auroratide.NBehave.Unit.When {
             Assert.That(stubAction.TimesCalled.Return, Is.EqualTo(0));
         }
 
+        [ExpectedException (typeof(Exceptions.StubbingException))]
+        [Test] public void ShouldThrowStubbingExceptionWhenStubActionReturnsIncorrectType() {
+            Mock.StubAction stubAction = new Mock.StubAction();
+            methodStub.Returns.NextReturnAction.Enqueue(stubAction);
+            stubAction.Returns.Return.Set(arguments, "string");
+
+            methodCall.AndReturn<int>();
+        }
+
     }
 
 }

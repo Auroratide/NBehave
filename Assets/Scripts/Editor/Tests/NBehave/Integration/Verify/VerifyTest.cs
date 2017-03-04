@@ -185,9 +185,10 @@ namespace Auroratide.NBehave.Integration {
             Verify.That(() => mock.WithDefaults(2, "hello")).IsCalled();
         }
 
-        [Ignore("Not yet implemented")]
+        [ExpectedException (typeof(VerificationException))]
         [Test] public void ShouldThrowVerificationExceptionWhenAttemptingToVerifyNonMockedClass() {
-            
+            NonMock nonMock = new NonMock();
+            Verify.That(() => nonMock.Method()).IsNotCalled();
         }
 
         private class Mock : Core.NBehaveMock {
@@ -253,6 +254,10 @@ namespace Auroratide.NBehave.Integration {
                 NBehave.Call(ints);
             }
 
+        }
+
+        private class NonMock {
+            public int Method() { return 0; }
         }
 
         private class Class {}

@@ -177,9 +177,17 @@ namespace Auroratide.NBehave.Integration {
             Assert.That(wasCalled, Is.True);
         }
 
-        [Ignore("Not yet implemented")]
+        [ExpectedException (typeof(Exceptions.StubbingException))]
         [Test] public void ShouldThrowStubbingExceptionWhenAttemptingToStubANonMockedClass() {
-            
+            NonMock nonMock = new NonMock();
+            When.Called(() => nonMock.Method()).Then.Return(2);
+        }
+
+        [ExpectedException (typeof(Exceptions.StubbingException))]
+        [Test] public void ShouldThrowStubbingExceptionWhenAttemptingToReturnIncorrectType() {
+            When.Called(() => mock.PrimitiveReturn()).Then.Return("hello");
+
+            mock.PrimitiveReturn();
         }
 
         private class Mock : Core.NBehaveMock {
@@ -258,6 +266,10 @@ namespace Auroratide.NBehave.Integration {
                 NBehave.Call().AndExecute();
             }
 
+        }
+
+        private class NonMock {
+            public int Method() { return 0; }
         }
 
         private class Class {}

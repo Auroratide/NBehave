@@ -18,7 +18,7 @@ namespace Auroratide.NBehave {
         }
 
         private static Core.OngoingStubbing StubMethod(MethodCallExpression method) {
-            Core.NBehaveMock mock = (Core.NBehaveMock)Expression.Lambda<Func<object>>(method.Object).Compile().Invoke();
+            Core.NBehaveMock mock = ExtractMock(method.Object);
             string methodName = new Internal.MethodNamer(method.Method).Name();
 
             object[] arguments = new object[method.Arguments.Count];
@@ -29,9 +29,17 @@ namespace Auroratide.NBehave {
         }
 
         private static Core.OngoingStubbing StubMember(MemberExpression member) {
-            Core.NBehaveMock mock = (Core.NBehaveMock)Expression.Lambda<Func<object>>(member.Expression).Compile().Invoke();
+            Core.NBehaveMock mock = ExtractMock(member.Expression);
             string memberName = "get_" + member.Member.Name;
             return mock.NBehave.StubMemory.Get(memberName).With();
+        }
+
+        private static Core.NBehaveMock ExtractMock(Expression expression) {
+            object extraction = Expression.Lambda<Func<object>>(expression).Compile().Invoke();
+            if(extraction is Core.NBehaveMock)
+                return (Core.NBehaveMock)extraction;
+            else
+                throw new Exceptions.StubbingException(extraction.GetType());
         }
 
     }
