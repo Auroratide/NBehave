@@ -36,7 +36,7 @@ Basic Usage
 
 Create a mock of an non-MonoBehaviour interface:
 ```csharp
-ITile mockTile = Mock.Basic<ITile>();
+ITile mockTile = Mock.Basic<ITile>().Create();
 ```
 
 Add a mock component to a game object:
