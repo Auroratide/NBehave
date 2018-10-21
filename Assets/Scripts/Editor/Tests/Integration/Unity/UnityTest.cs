@@ -47,8 +47,11 @@ namespace Auroratide.NBehave.Integration {
             Assert.That(behaviour.Method(), Is.EqualTo(2));
         }
 
-        [Test] public void ShouldThrowStubbingExceptionWhenAttemptingToMockNonInterfaceBehaviour() {
-            Assert.Throws<Exceptions.MockingException>(() => gameObject.AddMockComponent<Behaviour>());
+        [Test] public void ShouldMockConcreteBehaviourClasses() {
+            Behaviour behaviour = gameObject.AddMockComponent<Behaviour>();
+            When.Called(() => behaviour.Method()).Then.Return(5);
+
+            Assert.That(behaviour.Method(), Is.EqualTo(5));
         }
 
         private class Behaviour : MonoBehaviour {
@@ -60,6 +63,10 @@ namespace Auroratide.NBehave.Integration {
             }
 
             public void Update() { ++updateCalled; }
+
+            public virtual int Method() {
+                return 1;
+            }
 
         }
 

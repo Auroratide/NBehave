@@ -309,8 +309,11 @@ namespace Auroratide.NBehave.Integration {
             Assert.That(mock.WithDefaults(5, "world"), Is.EqualTo(7));
         }
 
-        [Test] public void ShouldThrowMockingExceptionWhenAttemptingToMockANonInterfaceType() {
-            Assert.Throws<Exceptions.MockingException>(() => Mock.Basic<Class>());
+        [Test] public void ShouldMockConcreteClasses() {
+            ConcreteClass c = Mock.Basic<ConcreteClass>();
+            When.Called(() => c.OneReturn()).Then.Return(5);
+
+            Assert.That(c.OneReturn(), Is.EqualTo(5));
         }
 
         private interface Interface {
@@ -347,6 +350,12 @@ namespace Auroratide.NBehave.Integration {
             public int x;
             public Struct(int x) {
                 this.x = x;
+            }
+        }
+
+        private class ConcreteClass {
+            public virtual int OneReturn() {
+                return 1;
             }
         }
 

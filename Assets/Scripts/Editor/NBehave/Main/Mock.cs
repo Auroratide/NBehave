@@ -12,26 +12,32 @@ namespace Auroratide.NBehave {
         private static ModuleBuilder moduleBuilder = null;
 
     /// <summary>
-    /// Create a basic mock of an interface. The mock will implement exactly the given interface. Note you can only mock interfaces, not classes!
+    /// Create a basic mock of an interface or class. The mock will implement exactly the given interface or override public virtual methods.
     /// </summary>
-    /// <typeparam name="T">The interface to mock.</typeparam>
+    /// <typeparam name="T">The interface or class to mock.</typeparam>
     /// <example>
     /// The below is a typical usage of this method.
     /// <code>
-    /// IMyClass mock = Mock.Basic<IMyClass>();
+    /// MyClass mock = Mock.Basic<MyClass>();
     /// </code>
     /// </example>
         public static T Basic<T>() where T : class {
-            return new Internal.MockedType<T>(new Internal.BasicEmitter<T>(GetModuleBuilder()).Emit()).Create();
+            if(typeof(T).IsInterface)
+                return new Internal.MockedType<T>(new Internal.InterfaceEmitter<T>(GetModuleBuilder()).Emit()).Create();
+            else
+                return new Internal.MockedType<T>(new Internal.ConcreteClassEmitter<T>(GetModuleBuilder()).Emit()).Create();
         }
 
     /// <summary>
     /// Creates a mock of an interface while extending <c>MonoBehaviour</c>.
     /// <para>You cannot normally create a MonoBehaviour instance. Rather than use this method directly, it is recommended you use the <c>AddMockComponent<>()</c> extension method instead.</para>
     /// </summary>
-    /// <typeparam name="T">The interface to mock.</typeparam>
+    /// <typeparam name="T">The interface or class to mock.</typeparam>
         public static T Behaviour<T>() where T : class {
-            return new Internal.MockedType<T>(new Internal.NBehaviourEmitter<T>(GetModuleBuilder()).Emit()).Create();
+            if(typeof(T).IsInterface)
+                return new Internal.MockedType<T>(new Internal.NBehaviourEmitter<T>(GetModuleBuilder()).Emit()).Create();
+            else
+                return new Internal.MockedType<T>(new Internal.ConcreteClassEmitter<T>(GetModuleBuilder()).Emit()).Create();
         }
 
 

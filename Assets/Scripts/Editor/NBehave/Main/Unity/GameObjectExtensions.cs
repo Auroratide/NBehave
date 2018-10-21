@@ -24,10 +24,10 @@ namespace Auroratide.NBehave.Unity {
     /// </summary>
     /// <returns>The mock component.</returns>
     /// <param name="obj">The game object.</param>
-    /// <typeparam name="T">The interface to mock and attach to the game object as a <c>MonoBehaviour</c></typeparam>
+    /// <typeparam name="T">The interface or class to mock and attach to the game object as a <c>MonoBehaviour</c></typeparam>
     /// <example>
     /// <code>
-    /// IMyInterface mock = gameObject.AddMockComponent<IMyInterface>();
+    /// MyBehaviour mock = gameObject.AddMockComponent<MyBehaviour>();
     /// When.Called(() => mock.Method()).Then.Return(5);
     /// </code>
     /// </example>
