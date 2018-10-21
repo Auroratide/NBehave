@@ -9,7 +9,7 @@ namespace Auroratide.NBehave.Integration {
         Interface mock;
 
         [SetUp] public void Init() {
-            mock = Mock.Basic<Interface>().Create();
+            mock = Mock.Basic<Interface>();
         }
             
         [Test] public void ShouldStubProperty() {

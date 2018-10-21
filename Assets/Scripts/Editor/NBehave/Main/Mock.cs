@@ -18,11 +18,11 @@ namespace Auroratide.NBehave {
     /// <example>
     /// The below is a typical usage of this method.
     /// <code>
-    /// IMyClass mock = Mock.Basic<IMyClass>().Create();
+    /// IMyClass mock = Mock.Basic<IMyClass>();
     /// </code>
     /// </example>
-        public static Core.MockedType<T> Basic<T>() where T : class {
-            return new Internal.MockedType<T>(new Internal.BasicEmitter<T>(GetModuleBuilder()).Emit());
+        public static T Basic<T>() where T : class {
+            return new Internal.MockedType<T>(new Internal.BasicEmitter<T>(GetModuleBuilder()).Emit()).Create();
         }
 
     /// <summary>
@@ -30,8 +30,8 @@ namespace Auroratide.NBehave {
     /// <para>You cannot normally create a MonoBehaviour instance. Rather than use this method directly, it is recommended you use the <c>AddMockComponent<>()</c> extension method instead.</para>
     /// </summary>
     /// <typeparam name="T">The interface to mock.</typeparam>
-        public static Core.MockedType<T> Behaviour<T>() where T : class {
-            return new Internal.MockedType<T>(new Internal.NBehaviourEmitter<T>(GetModuleBuilder()).Emit());
+        public static T Behaviour<T>() where T : class {
+            return new Internal.MockedType<T>(new Internal.NBehaviourEmitter<T>(GetModuleBuilder()).Emit()).Create();
         }
 
 

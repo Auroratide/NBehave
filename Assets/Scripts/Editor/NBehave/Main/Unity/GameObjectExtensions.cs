@@ -32,7 +32,7 @@ namespace Auroratide.NBehave.Unity {
     /// </code>
     /// </example>
         public static T AddMockComponent<T>(this GameObject obj) where T : class {
-            Type type = Mock.Behaviour<T>().Create().GetType();
+            Type type = Mock.Behaviour<T>().GetType();
             return (T)(object)(obj.AddComponent(type));
         }
 
