@@ -8,10 +8,6 @@ namespace Auroratide.NBehave.Internal {
             this.type = type;
         }
 
-        public Type Type {
-            get { return type; }
-        }
-
         public T Create() {
             return (T)(Activator.CreateInstance(type));
         }
